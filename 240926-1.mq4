@@ -105,7 +105,7 @@ void detection()
    buy_entry_condition = false;
    sell_entry_condition = false;
    detection_tick();
-   static datetime lastTime = 0;
+   static datetime  lastTime = 0;
    if(lastTime == Time[0])
       return;
    lastTime = Time[0];
