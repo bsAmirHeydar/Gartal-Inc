@@ -1,4 +1,4 @@
-MQL4 Trading Software
+<Bold>MQL4 Trading Software</Bold?>
 Overview
 This project is a comprehensive trading software developed using MQL4 (MetaQuotes Language 4). The software is designed for traders seeking to enhance their trading strategies through automation. It incorporates a variety of features aimed at improving entry and exit signals, position sizing, and capital management techniques.
 
@@ -15,6 +15,7 @@ User-Friendly Interface: The software features an intuitive interface that simpl
 
 Contact
 For any inquiries or feedback, please contact via these ways:
+
 bs.amir.heydar@gmail.com  
 saeidshamsaeii00@gmail.com
 
