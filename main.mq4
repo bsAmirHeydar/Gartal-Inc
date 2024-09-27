@@ -8,23 +8,24 @@
 #property version   "1.00"
 #property strict
 //Tools
-#include "order-management.mqh"
-#include "indicator-management.mqh"
-#include "entry-management.mqh"
-#include "exit-management.mqh"
-#include "major-technical-management.mqh"
-#include "time-management.mqh"
+#include "MQHs/order-management.mqh"
+#include "MQHs/indicator-management.mqh"
+#include "MQHs/entry-management.mqh"
+#include "MQHs/exit-management.mqh"
+#include "MQHs/major-technical-management.mqh"
+#include "MQHs/time-management.mqh"
 //Detections
-#include "detection240919-ssl-hybrid-SSL2.mqh"
-#include "detection240919-cm-william-fix-vix.mqh"
-#include "detection240919-minor-reverse-ind.mqh"
-#include "detection240921-MA-cross.mqh"
-#include "detection240923-blackFlag-FTS.mqh"
-#include "detection240923-MACD-SMA.mqh"
+#include "MQHs/detection240919-ssl-hybrid-SSL2.mqh"
+#include "MQHs/detection240919-cm-william-fix-vix.mqh"
+#include "MQHs/detection240919-minor-reverse-ind.mqh"
+#include "MQHs/detection240921-MA-cross.mqh"
+#include "MQHs/detection240923-blackFlag-FTS.mqh"
+#include "MQHs/detection240923-MACD-SMA.mqh"
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
-int OnInit() {
+int OnInit()
+{
 //---
 //---
    return(INIT_SUCCEEDED);
@@ -32,13 +33,15 @@ int OnInit() {
 //+------------------------------------------------------------------+
 //| Expert deinitialization function                                 |
 //+------------------------------------------------------------------+
-void OnDeinit(const int reason) {
+void OnDeinit(const int reason)
+{
 //---
 }
 //+------------------------------------------------------------------+
 //| Expert tick function                                             |
 //+------------------------------------------------------------------+
-void detection_tick() {
+void detection_tick()
+{
 //+------------------------------------------------------------------+
 //| Detection CODE                                                   |
 //+------------------------------------------------------------------+
@@ -49,7 +52,8 @@ void detection_tick() {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void detection_candle() {
+void detection_candle()
+{
 //+------------------------------------------------------------------+
 //| Detection CODE                                                   |
 //+------------------------------------------------------------------+
@@ -84,7 +88,8 @@ void detection_candle() {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void detection() {
+void detection()
+{
    trail_engine_check_clean_orders(1);
    trail_engine_check_clean_orders(-1);
    buy_type = 0;
@@ -116,7 +121,8 @@ void detection() {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void OnTick() {
+void OnTick()
+{
 //---
    datetime serverTime = TimeCurrent();
    int currentHour = TimeHour(serverTime);
