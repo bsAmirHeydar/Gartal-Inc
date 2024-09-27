@@ -15,12 +15,12 @@
 #include "MQHs/major-technical-management.mqh"
 #include "MQHs/time-management.mqh"
 //Detections
-#include "MQHs/detection240919-ssl-hybrid-SSL2.mqh"
-#include "MQHs/detection240919-cm-william-fix-vix.mqh"
-#include "MQHs/detection240919-minor-reverse-ind.mqh"
-#include "MQHs/detection240921-MA-cross.mqh"
-#include "MQHs/detection240923-blackFlag-FTS.mqh"
-#include "MQHs/detection240923-MACD-SMA.mqh"
+#include "MQHs/Detections/detection240919-ssl-hybrid-SSL2.mqh"
+#include "MQHs/Detections/detection240919-cm-william-fix-vix.mqh"
+#include "MQHs/Detections/detection240919-minor-reverse-ind.mqh"
+#include "MQHs/Detections/detection240921-MA-cross.mqh"
+#include "MQHs/Detections/detection240923-blackFlag-FTS.mqh"
+#include "MQHs/Detections/detection240923-MACD-SMA.mqh"
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+

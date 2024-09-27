@@ -6,7 +6,7 @@
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link      "https://www.mql5.com"
 #property strict
-#include "indicator-management.mqh"
+#include "../indicator-management.mqh"
 
 //+------------------------------------------------------------------+
 //| defines                                                          |
