@@ -6,7 +6,7 @@
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link "https://www.mql5.com"
 #property strict
-#include "order-management.mqh"
+#include "entry-management.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -57,9 +57,22 @@ enum add_volume_SL_mode_option{
     add_volume_SL_MA = 4, //MA
     add_volume_SL_band = 5, //Bollinger Band
 };
-
+enum add_volume_add_vol_mode_option{
+    add_volume_add_vol_none = 0, //Same Risk
+    add_volume_add_vol_from_profit = 1, //From Profit
+    add_volume_add_vol_logarithmic = 2, //Logarithmic
+    add_volume_add_vol_subtractive = 3, //Subtractive
+};
+enum add_volume_filter_for_add_option{
+    add_volume_filter_for_add_none = 0, //Non Filter
+};
 input string add_volume_engine_non0 = "-----Add Volume Engine-----";
 input int add_volume_max_step = 0; //Max step
+input bool add_volume_same_group_order = true; //Same Order Group
+input bool add_volume_group_trail = true; //Group Trail
+input bool add_volume_group_tp = true; //Group TP
+input add_volume_filter_for_add_option add_volume_filter_for_add = 0; //Filter for Add Volume
+input add_volume_add_vol_mode_option add_volume_add_vol_mode = 0; //Volume Mode for Add
 input string add_volume_trigger_non0 = "-** Add Volume Trigger **-";
 input add_volume_trigger_concept_option add_volume_trigger_concept = 0; //Trigger Concept
 input add_volume_trigger_mode_option add_volume_trigger_mode = 0; //Trigger Mode
@@ -82,8 +95,33 @@ input ENUM_TIMEFRAMES add_volume_SL_MA_timeframe = PERIOD_CURRENT; //MA time fra
 input add_volume_MA_mode_option add_volume_SL_MA_mode = 0; //MA mode SL
 input int add_volume_SL_MA_period = 14; //MA period SL
 
-
-void capital_add_volume()
+double add_volume_buy_orders[1][5], add_volume_sell_orders[1][5];
+//[0]: ticket
+//[1]: first entry
+//[2]: first SL
+//[3]: last trigger
+//[4]: last SL
+double add_volume_group_buy_orders[1][1], add_volume_group_sell_orders[1][1];
+//[0]: main ticket order
+//[1]: sub ticket order
+double calculate_new_volume()
 {
-    
+    return 0.0;
+}
+void add_volume_clean_group()
+{
+
+}
+void capital_add_volume(int type_condition)
+{
+   buy_type = 0;
+   sell_type = 0;
+   buy_entry_price = 0.0;
+   sell_entry_price = 0.0;
+   buy_sl_price = 0.0;
+   sell_sl_price = 0.0;
+   buy_tp_price = 0.0;
+   sell_tp_price = 0.0;
+   buy_entry_condition = false;
+   sell_entry_condition = false;
 }
