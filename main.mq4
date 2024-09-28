@@ -101,6 +101,8 @@ void detection()
    sell_sl_price = 0.0;
    buy_tp_price = 0.0;
    sell_tp_price = 0.0;
+   buy_volume_factor = 1.0;
+   sell_volume_factor = 1.0;
    buy_exit_condition = false;
    sell_exit_condition = false;
    buy_entry_condition = false;
