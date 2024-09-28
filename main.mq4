@@ -12,6 +12,7 @@
 #include "MQHs/indicator-management.mqh"
 #include "MQHs/entry-management.mqh"
 #include "MQHs/exit-management.mqh"
+#include "MQHs/capital-add-volume-engine.mqh"
 #include "MQHs/major-technical-management.mqh"
 #include "MQHs/time-management.mqh"
 //Detections
