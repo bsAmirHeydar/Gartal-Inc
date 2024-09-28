@@ -30,3 +30,39 @@
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+//[0]: group ticket order
+//[1]: main and sub ticket order
+class organization_orders {
+private:
+    int key_ticket;
+    int ticket;
+    int type;
+    double entry;
+    double sl[];
+    double tp[];
+public:
+    organization_orders(void);
+    
+    void organization(int input_key_ticket, int input_ticket) {
+        ticket = input_ticket;
+        key_ticket = input_key_ticket;
+        if(OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES)) {
+            type = OrderType();
+            entry = OrderOpenPrice();
+            ArrayResize(sl, 1, 0);
+            sl[0] = OrderStopLoss();
+            ArrayResize(tp, 1, 0);
+            tp[0] = OrderTakeProfit();
+        }
+    }
+
+    // متدی برای دریافت مقدار
+    int GetKeyOrder() {
+        return key_ticket;
+    }
+    int GetTicketOrder() {
+        return ticket;
+    }
+};
+organization_orders order_status_list[];
+//+------------------------------------------------------------------+
