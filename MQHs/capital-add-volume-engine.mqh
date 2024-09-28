@@ -71,6 +71,7 @@ input int add_volume_max_step = 0; //Max step
 input bool add_volume_same_group_order = true; //Same Order Group
 input bool add_volume_group_trail = true; //Group Trail
 input bool add_volume_group_tp = true; //Group TP
+input entry_engine_mode_filter_option add_volume_entry_mode = 0; //Entry Mode
 input add_volume_filter_for_add_option add_volume_filter_for_add = 0; //Filter for Add Volume
 input add_volume_add_vol_mode_option add_volume_add_vol_mode = 0; //Volume Mode for Add
 input string add_volume_trigger_non0 = "-** Add Volume Trigger **-";
@@ -124,4 +125,13 @@ void capital_add_volume(int type_condition)
    sell_tp_price = 0.0;
    buy_entry_condition = false;
    sell_entry_condition = false;
+
+
+    
+    buy_entry_price = Bid;
+    sell_entry_price = Bid;
+    buy_sl_price = Low[1];
+    sell_sl_price = High[1];
+
+   run_engin_entry();
 }
