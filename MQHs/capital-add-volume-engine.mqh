@@ -103,8 +103,8 @@ double add_volume_buy_orders[1][5], add_volume_sell_orders[1][5];
 //[3]: last trigger
 //[4]: last SL
 double add_volume_group_buy_orders[1][1], add_volume_group_sell_orders[1][1];
-//[0]: main ticket order
-//[1]: sub ticket order
+//[0]: group ticket order
+//[1]: main and sub ticket order
 double calculate_new_volume() {
     return 1.0;
 }
