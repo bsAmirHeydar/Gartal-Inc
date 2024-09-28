@@ -31,7 +31,9 @@ input int min_candle_preiod = 2;//Min Candle period for structure
 
 double last_peak, last_valley;
 
-void calculate_strc_market()
-{
-   
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void calculate_strc_market() {
 }
+//+------------------------------------------------------------------+

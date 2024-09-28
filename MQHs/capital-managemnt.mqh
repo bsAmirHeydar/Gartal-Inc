@@ -26,15 +26,13 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-enum capital_management_mode_filter_option
-  {
-   capital_management_none = 0, //Normal
-   capital_management_add_volume = 1, //Add volume
-   capital_management_reduce_volume = 2, //Reduce volume
-  };
+enum capital_management_mode_filter_option {
+    capital_management_none = 0, //Normal
+    capital_management_add_volume = 1, //Add volume
+    capital_management_reduce_volume = 2, //Reduce volume
+};
 input string non_entry0 = "-----Capital Management-----";
 input capital_management_mode_filter_option capital_management_mode = 0;
-void capital_management()
-{
-
+void capital_management() {
 }
+//+------------------------------------------------------------------+

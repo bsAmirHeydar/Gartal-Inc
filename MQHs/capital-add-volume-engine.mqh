@@ -37,11 +37,11 @@ enum add_volume_MA_mode_option {
     add_volume_MA_smma_mode = 2,   // SMMA
     add_volume_MA_lwma_mode = 3    // LWMA
 };
-enum add_volume_trigger_concept_option{
+enum add_volume_trigger_concept_option {
     add_volume_trigger_concept_simple = 0, //Simple
     add_volume_trigger_concept_advanve = 1, //Advanve: PullBack
 };
-enum add_volume_trigger_mode_option{
+enum add_volume_trigger_mode_option {
     add_volume_trigger_none = 0, //No Add Volume
     add_volume_trigger_fix_point = 1, //Fix Point
     add_volume_trigger_fix_tp = 2, //Fix TP
@@ -49,7 +49,7 @@ enum add_volume_trigger_mode_option{
     add_volume_trigger_MA = 4, //MA
     add_volume_trigger_band = 5, //Bollinger Band
 };
-enum add_volume_SL_mode_option{
+enum add_volume_SL_mode_option {
     add_volume_SL_none = 0, //No Add Volume
     add_volume_SL_fix_point = 1, //Fix Point
     add_volume_SL_fix_tp = 2, //Fix TP
@@ -57,13 +57,13 @@ enum add_volume_SL_mode_option{
     add_volume_SL_MA = 4, //MA
     add_volume_SL_band = 5, //Bollinger Band
 };
-enum add_volume_add_vol_mode_option{
+enum add_volume_add_vol_mode_option {
     add_volume_add_vol_none = 0, //Same Risk
     add_volume_add_vol_from_profit = 1, //From Profit
     add_volume_add_vol_logarithmic = 2, //Logarithmic
     add_volume_add_vol_subtractive = 3, //Subtractive
 };
-enum add_volume_filter_for_add_option{
+enum add_volume_filter_for_add_option {
     add_volume_filter_for_add_none = 0, //Non Filter
 };
 input string add_volume_engine_non0 = "-----Add Volume Engine-----";
@@ -105,33 +105,26 @@ double add_volume_buy_orders[1][5], add_volume_sell_orders[1][5];
 double add_volume_group_buy_orders[1][1], add_volume_group_sell_orders[1][1];
 //[0]: main ticket order
 //[1]: sub ticket order
-double calculate_new_volume()
-{
-    return 0.0;
+double calculate_new_volume() {
+    return 1.0;
 }
-void add_volume_clean_group()
-{
-
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void add_volume_clean_group() {
 }
-void capital_add_volume(int type_condition)
-{
-   buy_type = 0;
-   sell_type = 0;
-   buy_entry_price = 0.0;
-   sell_entry_price = 0.0;
-   buy_sl_price = 0.0;
-   sell_sl_price = 0.0;
-   buy_tp_price = 0.0;
-   sell_tp_price = 0.0;
-   buy_entry_condition = false;
-   sell_entry_condition = false;
-
-
-    
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void capital_add_volume(int type_condition) {
+    buy_entry_condition = false;
+    sell_entry_condition = false;
+    buy_volume_factor = calculate_new_volume();
+    sell_volume_factor = calculate_new_volume();
     buy_entry_price = Bid;
     sell_entry_price = Bid;
     buy_sl_price = Low[1];
     sell_sl_price = High[1];
-
-   run_engin_entry();
+    run_engin_entry();
 }
+//+------------------------------------------------------------------+
