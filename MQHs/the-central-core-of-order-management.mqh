@@ -45,7 +45,12 @@ private:
     double add_vol_trigger;
     int add_vol_count;
     bool status;
+    bool add_vol_mode_first;
+    bool add_vol_mode_final;
 public:
+    int result_related_ticket[];
+    bool is_trail_in_this_candle;
+
     organization_orders(void) {
     }
 
@@ -64,6 +69,9 @@ public:
             status = true;
             trail_count = 0;
             add_vol_count = 0;
+            add_vol_mode_first = false;
+            add_vol_mode_final = false;
+            is_trail_in_this_candle = false;
         }
     }
     double getTrailTriggerPrice() {
@@ -91,7 +99,7 @@ public:
         }
     }
     // متدی برای دریافت مقدار
-    int GetKeyOrder() {
+    int GetKeyTicket() {
         return key_ticket;
     }
     int GetTicketOrder() {
@@ -122,6 +130,15 @@ public:
     void plusAddVolCounter() {
         add_vol_count += 1;
     }
+    void sub_ticket_list(int input_key_ticket) {
+        for(int i = 0; i < ArraySize(order_status_list); i++) {
+            if(order_status_list[i].GetKeyTicket() == input_key_ticket) {
+                ArrayResize(result_related_ticket, ArraySize(result_related_ticket) + 1, 0);
+                result_related_ticket[ArraySize(result_related_ticket) - 1] = order_status_list[i].GetTicketOrder();
+            }
+        }
+    }
+
 };
 organization_orders order_status_list[];
 int check_order_status_list_index(int ticket) {
@@ -139,4 +156,15 @@ void new_order_for_organization(int keyTicket) {
     ArrayResize(order_status_list, ArrayRange(order_status_list, 0) + 1, 0);
     order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket);
 }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void off_all_trail() {
+    for(int i = 0; i < ArraySize(order_status_list); i++) {
+        order_status_list[i].is_trail_in_this_candle = false;
+    }
+}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 //+------------------------------------------------------------------+

@@ -114,6 +114,25 @@ void add_volume_clean_group() {
 //|                                                                  |
 //+------------------------------------------------------------------+
 void capital_add_volume(int type_condition) {
+    if(type_condition == 1) {
+        if(add_volume_add_vol_mode != 0) {
+            if(add_volume_add_vol_mode == 1) {
+            } else if(add_volume_add_vol_mode == 2) {
+            } else if(add_volume_add_vol_mode == 3) {
+            } else if(add_volume_add_vol_mode == 4) {
+            } else if(add_volume_add_vol_mode == 5) {
+            }
+        }
+    } else if(type_condition == -1) {
+        if(add_volume_add_vol_mode != 0) {
+            if(add_volume_add_vol_mode == 1) {
+            } else if(add_volume_add_vol_mode == 2) {
+            } else if(add_volume_add_vol_mode == 3) {
+            } else if(add_volume_add_vol_mode == 4) {
+            } else if(add_volume_add_vol_mode == 5) {
+            }
+        }
+    }
     buy_entry_condition = false;
     sell_entry_condition = false;
     buy_volume_factor = calculate_new_volume();
