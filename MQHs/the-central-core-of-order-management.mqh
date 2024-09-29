@@ -138,7 +138,14 @@ public:
             }
         }
     }
-
+    bool isKey(int input_ticket) {
+        for(int i = 0; i < ArraySize(order_status_list); i++) {
+            if(order_status_list[i].GetKeyTicket() == input_ticket) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 organization_orders order_status_list[];
 int check_order_status_list_index(int ticket) {

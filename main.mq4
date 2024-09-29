@@ -102,14 +102,16 @@ void detection() {
     sell_exit_condition = false;
     buy_entry_condition = false;
     sell_entry_condition = false;
-    buy_key_ticket = 0;
-    sell_key_ticket = 0;
+    buy_key_ticket = -1;
+    sell_key_ticket = -1;
     detection_tick();
     static datetime  lastTime = 0;
     if(lastTime == Time[0])
         return;
     lastTime = Time[0];
     detection_candle();
+    capital_add_volume(1);
+    capital_add_volume(-1);
     capital_trail_engine(1);
     capital_trail_engine(-1);
     run_engin_entry();
