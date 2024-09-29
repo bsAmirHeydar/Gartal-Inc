@@ -36,20 +36,22 @@ class organization_orders {
 private:
     int key_ticket;
     int ticket;
-    int type;
     double entry;
     double sl[];
     double tp[];
     double trail_trigger;
-    int trail_count;
     double add_vol_trigger;
-    int add_vol_count;
     bool status;
-    bool add_vol_mode_first;
-    bool add_vol_mode_final;
+
 public:
+    int type;
     int result_related_ticket[];
     bool is_trail_in_this_candle;
+    int add_vol_count;
+    int trail_count;
+    bool add_vol_mode_first;
+    bool add_vol_mode_final;
+
 
     organization_orders(void) {
     }
