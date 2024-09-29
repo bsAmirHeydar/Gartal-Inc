@@ -40,8 +40,11 @@ private:
     double entry;
     double sl[];
     double tp[];
+    double trail_trigger;
+    double add_vol_trigger;
 public:
-    organization_orders(void);
+    organization_orders(void) {
+    }
 
     void newOrder(int input_key_ticket) {
         if(OrderSelect(OrdersTotal() - 1, SELECT_BY_POS, MODE_TRADES)) {
@@ -53,7 +56,21 @@ public:
             sl[0] = OrderStopLoss();
             ArrayResize(tp, 1, 0);
             tp[0] = OrderTakeProfit();
+            trail_trigger = entry;
+            add_vol_trigger = entry;
         }
+    }
+    double getTrailTriggerPrice() {
+        return trail_trigger;
+    }
+    void modifyTrailTrigger(double input_trail_trigger) {
+        trail_trigger = input_trail_trigger;
+    }
+    double getAddVolTriggerPrice() {
+        return add_vol_trigger;
+    }
+    void modifyAddVolTrigger(double input_add_vol_trigger) {
+        add_vol_trigger = input_add_vol_trigger;
     }
     void newSL() {
         if(OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES)) {
@@ -73,6 +90,15 @@ public:
     }
     int GetTicketOrder() {
         return ticket;
+    }
+    double getSLValue() {
+        if(type == OP_BUY) {
+            return entry - sl[0];
+        } else if(type == OP_SELL) {
+            return sl[0] - entry;
+        } else {
+            return -1;
+        }
     }
 };
 organization_orders order_status_list[];
