@@ -132,7 +132,7 @@ public:
     }
     void sub_ticket_list(int input_key_ticket) {
         for(int i = 0; i < ArraySize(order_status_list); i++) {
-            if(order_status_list[i].GetKeyTicket() == input_key_ticket) {
+            if(order_status_list[i].GetKeyTicket() == input_key_ticket && order_status_list[i].status) {
                 ArrayResize(result_related_ticket, ArraySize(result_related_ticket) + 1, 0);
                 result_related_ticket[ArraySize(result_related_ticket) - 1] = order_status_list[i].GetTicketOrder();
             }
@@ -140,7 +140,7 @@ public:
     }
     bool isKey(int input_ticket) {
         for(int i = 0; i < ArraySize(order_status_list); i++) {
-            if(order_status_list[i].GetKeyTicket() == input_ticket) {
+            if(order_status_list[i].GetKeyTicket() == input_ticket && order_status_list[i].status) {
                 return true;
             }
         }
