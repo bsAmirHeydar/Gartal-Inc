@@ -41,9 +41,9 @@ private:
     double tp[];
     double trail_trigger;
     double add_vol_trigger;
-    bool status;
 
 public:
+    bool status;
     int type;
     int result_related_ticket[];
     bool is_trail_in_this_candle;
@@ -176,11 +176,13 @@ void off_all_trail() {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-int count_keyTicket() {
+int count_keyTicket(int type_condition) {
     int counter = 0;
     for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(order_status_list[i].GetKeyTicket() == -1) {
-            counter += 1;
+        if(order_status_list[i].GetKeyTicket() == -1 && order_status_list[i].status) {
+            if((order_status_list[i].type == OP_BUY && type_condition == 1) || (order_status_list[i].type == OP_SELL && type_condition == -1)) {
+                counter += 1;
+            }
         }
     }
     return counter;
@@ -188,4 +190,15 @@ int count_keyTicket() {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+void clean_closed_orders() {
+    for(int i = 0; i < ArraySize(order_status_list); i++) {
+        if(order_status_list[i].status) {
+            if(OrderSelect(order_status_list[i].GetTicketOrder(), SELECT_BY_TICKET, MODE_HISTORY)) {
+                order_status_list[i].status = false;
+                printf(order_status_list[i].status);
+            }
+        }
+    }
+}
 //+------------------------------------------------------------------+
