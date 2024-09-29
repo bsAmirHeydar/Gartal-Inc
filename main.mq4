@@ -102,6 +102,8 @@ void detection() {
     sell_exit_condition = false;
     buy_entry_condition = false;
     sell_entry_condition = false;
+    buy_key_ticket = 0;
+    sell_key_ticket = 0;
     detection_tick();
     static datetime  lastTime = 0;
     if(lastTime == Time[0])

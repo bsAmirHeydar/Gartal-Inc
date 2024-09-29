@@ -42,11 +42,11 @@ private:
     double tp[];
 public:
     organization_orders(void);
-    
-    void organization(int input_key_ticket, int input_ticket) {
-        ticket = input_ticket;
-        key_ticket = input_key_ticket;
-        if(OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES)) {
+
+    void newOrder(int input_key_ticket) {
+        if(OrderSelect(OrdersTotal() - 1, SELECT_BY_POS, MODE_TRADES)) {
+            ticket = OrderTicket();
+            key_ticket = input_key_ticket;
             type = OrderType();
             entry = OrderOpenPrice();
             ArrayResize(sl, 1, 0);
@@ -55,7 +55,18 @@ public:
             tp[0] = OrderTakeProfit();
         }
     }
-
+    void newSL() {
+        if(OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES)) {
+            ArrayResize(sl, ArraySize(sl) + 1, 0);
+            sl[ArraySize(sl) - 1] = OrderStopLoss();
+        }
+    }
+    void newTP() {
+        if(OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES)) {
+            ArrayResize(tp, ArraySize(tp) + 1, 0);
+            tp[ArraySize(tp) - 1] = OrderTakeProfit();
+        }
+    }
     // متدی برای دریافت مقدار
     int GetKeyOrder() {
         return key_ticket;
@@ -65,4 +76,19 @@ public:
     }
 };
 organization_orders order_status_list[];
+int check_order_status_list_index(int ticket) {
+    for(int i = 0; i < ArraySize(order_status_list); i++) {
+        if(order_status_list[i].GetTicketOrder() == ticket) {
+            return i;
+        }
+    }
+    return -1;
+}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void new_order_for_organization(int keyTicket) {
+    ArrayResize(order_status_list, ArrayRange(order_status_list, 0) + 1, 0);
+    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket);
+}
 //+------------------------------------------------------------------+
