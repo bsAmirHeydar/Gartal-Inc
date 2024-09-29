@@ -185,6 +185,7 @@ int count_keyTicket(int type_condition) {
             }
         }
     }
+    printf(counter);
     return counter;
 }
 //+------------------------------------------------------------------+
