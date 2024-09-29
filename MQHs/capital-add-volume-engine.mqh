@@ -69,7 +69,6 @@ enum add_volume_filter_for_add_option {
 input string add_volume_engine_non0 = "-----Add Volume Engine-----";
 input int add_volume_max_step = 0; //Max step
 input bool add_volume_same_group_order = true; //Same Order Group
-input bool add_volume_group_trail = true; //Group Trail
 input bool add_volume_group_tp = true; //Group TP
 input entry_engine_mode_filter_option add_volume_entry_mode = 0; //Entry Mode
 input add_volume_filter_for_add_option add_volume_filter_for_add = 0; //Filter for Add Volume
