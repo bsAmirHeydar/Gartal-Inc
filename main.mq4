@@ -86,8 +86,8 @@ void detection_candle() {
 //|                                                                  |
 //+------------------------------------------------------------------+
 void detection() {
-    trail_engine_check_clean_orders(1);
-    trail_engine_check_clean_orders(-1);
+    //trail_engine_check_clean_orders(1);
+    //trail_engine_check_clean_orders(-1);
     buy_type = 0;
     sell_type = 0;
     buy_entry_price = 0.0;

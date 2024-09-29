@@ -41,7 +41,10 @@ private:
     double sl[];
     double tp[];
     double trail_trigger;
+    int trail_count;
     double add_vol_trigger;
+    int add_vol_count;
+    bool status;
 public:
     organization_orders(void) {
     }
@@ -58,6 +61,9 @@ public:
             tp[0] = OrderTakeProfit();
             trail_trigger = entry;
             add_vol_trigger = entry;
+            status = true;
+            trail_count = 0;
+            add_vol_count = 0;
         }
     }
     double getTrailTriggerPrice() {
@@ -93,12 +99,28 @@ public:
     }
     double getSLValue() {
         if(type == OP_BUY) {
-            return entry - sl[0];
+            return (entry - sl[0]);// * Point;
         } else if(type == OP_SELL) {
-            return sl[0] - entry;
+            return (sl[0] - entry);// * Point;
         } else {
             return -1;
         }
+    }
+    void delObject() {
+        status = false;
+    }
+    bool check_trail_counter(int max_trail_count) {
+        if(trail_count < max_trail_count) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    void plusTrailCounter() {
+        trail_count += 1;
+    }
+    void plusAddVolCounter() {
+        add_vol_count += 1;
     }
 };
 organization_orders order_status_list[];
