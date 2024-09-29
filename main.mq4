@@ -78,6 +78,14 @@ void detection_candle() {
     sell_entry_price = Bid;
     buy_sl_price = Low[1];
     sell_sl_price = High[1];
+    if(add_volume_run == 1) {
+        capital_add_volume(1);
+        capital_add_volume(-1);
+    }
+    if(trail_run == 1) {
+        capital_trail_engine(1);
+        capital_trail_engine(-1);
+    }
 //+------------------------------------------------------------------+
 //| END CODE                                                         |
 //+------------------------------------------------------------------+
@@ -110,10 +118,14 @@ void detection() {
         return;
     lastTime = Time[0];
     detection_candle();
-    capital_add_volume(1);
-    capital_add_volume(-1);
-    capital_trail_engine(1);
-    capital_trail_engine(-1);
+    if(add_volume_run == 0) {
+        capital_add_volume(1);
+        capital_add_volume(-1);
+    }
+    if(trail_run == 0) {
+        capital_trail_engine(1);
+        capital_trail_engine(-1);
+    }
     run_engin_entry();
     run_engine_exit();
 }
