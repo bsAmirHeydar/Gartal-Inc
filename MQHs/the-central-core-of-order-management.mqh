@@ -66,8 +66,9 @@ public:
             sl[0] = OrderStopLoss();
             ArrayResize(tp, 1, 0);
             tp[0] = OrderTakeProfit();
-            trail_trigger = entry;
-            add_vol_trigger = entry;
+            trail_trigger = OrderOpenPrice();
+            add_vol_trigger = OrderOpenPrice();
+            //printf(ticket + ":  " + trail_trigger);
             status = true;
             trail_count = 0;
             add_vol_count = 0;
@@ -162,7 +163,7 @@ int check_order_status_list_index(int ticket) {
 //|                                                                  |
 //+------------------------------------------------------------------+
 void new_order_for_organization(int keyTicket) {
-    ArrayResize(order_status_list, ArrayRange(order_status_list, 0) + 1, 0);
+    ArrayResize(order_status_list, ArraySize(order_status_list) + 1, 0);
     order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket);
 }
 //+------------------------------------------------------------------+
@@ -185,7 +186,6 @@ int count_keyTicket(int type_condition) {
             }
         }
     }
-    printf(counter);
     return counter;
 }
 //+------------------------------------------------------------------+
@@ -197,7 +197,6 @@ void clean_closed_orders() {
         if(order_status_list[i].status) {
             if(OrderSelect(order_status_list[i].GetTicketOrder(), SELECT_BY_TICKET, MODE_HISTORY)) {
                 order_status_list[i].status = false;
-                printf(order_status_list[i].status);
             }
         }
     }
