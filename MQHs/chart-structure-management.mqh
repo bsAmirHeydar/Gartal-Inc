@@ -26,8 +26,8 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-input string non0_chart_strc = "-----Market Structure-----";
-input int min_candle_preiod = 2;//Min Candle period for structure
+//input string non0_chart_strc = "-----Market Structure-----";
+//input int min_candle_preiod = 2;//Min Candle period for structure
 
 double last_peak, last_valley;
 
