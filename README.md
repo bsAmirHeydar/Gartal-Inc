@@ -16,7 +16,11 @@ User-Friendly Interface: The software features an intuitive interface that simpl
 # Contact
 For any inquiries or feedback, please contact via these ways:
 
-bs.amir.heydar@gmail.com  
+bs.amir.heydar@gmail.com
+
+vahiidnorozitrade@gmail.com
+
 saeidshamsaeii00@gmail.com
+
 
 Feel free to modify any sections to better suit your project or add additional details that you think are important!
