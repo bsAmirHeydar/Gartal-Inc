@@ -37,10 +37,6 @@ private:
     int key_ticket;
     int ticket;
     double entry;
-    double sl[];
-    double tp[];
-    double trail_trigger;
-    double add_vol_trigger;
 
 public:
     bool status;
@@ -51,6 +47,10 @@ public:
     int trail_count;
     bool add_vol_mode_first;
     bool add_vol_mode_final;
+    double sl[];
+    double tp[];
+    double trail_trigger;
+    double add_vol_trigger;
 
 
     organization_orders(void) {
@@ -186,6 +186,7 @@ int count_keyTicket(int type_condition) {
             }
         }
     }
+    printf("KeyTicket Count: " + IntegerToString(counter));
     return counter;
 }
 //+------------------------------------------------------------------+
@@ -196,6 +197,7 @@ void clean_closed_orders() {
     for(int i = 0; i < ArraySize(order_status_list); i++) {
         if(order_status_list[i].status) {
             if(OrderSelect(order_status_list[i].GetTicketOrder(), SELECT_BY_TICKET, MODE_HISTORY)) {
+                  //printf("||||||||||||||||||||||||||||||");
                 order_status_list[i].status = false;
             }
         }
