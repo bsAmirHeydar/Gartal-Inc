@@ -33,12 +33,12 @@
 //[0]: group ticket order
 //[1]: main and sub ticket order
 class organization_orders {
-private:
+  private:
     int key_ticket;
     int ticket;
     double entry;
 
-public:
+  public:
     bool status;
     int type;
     int result_related_ticket[];
@@ -151,6 +151,10 @@ public:
     }
 };
 organization_orders order_status_list[];
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int check_order_status_list_index(int ticket) {
     for(int i = 0; i < ArraySize(order_status_list); i++) {
         if(order_status_list[i].GetTicketOrder() == ticket) {
@@ -181,26 +185,23 @@ int count_keyTicket(int type_condition) {
     int counter = 0;
     for(int i = 0; i < ArraySize(order_status_list); i++) {
         if(order_status_list[i].GetKeyTicket() == -1 && order_status_list[i].status) {
-            if((order_status_list[i].type == OP_BUY && type_condition == 1) || (order_status_list[i].type == OP_SELL && type_condition == -1)) {
+            if((type_condition == 1 && order_status_list[i].type == OP_BUY) || (type_condition == -1 && order_status_list[i].type == OP_SELL)) {
                 counter += 1;
             }
         }
     }
-    printf("KeyTicket Count: " + IntegerToString(counter));
+    //printf("KeyTicket Count: " + IntegerToString(counter));
     return counter;
 }
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
-void clean_closed_orders() {
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(order_status_list[i].status) {
-            if(OrderSelect(order_status_list[i].GetTicketOrder(), SELECT_BY_TICKET, MODE_HISTORY)) {
-                  //printf("||||||||||||||||||||||||||||||");
-                order_status_list[i].status = false;
-            }
-        }
-    }
+void clean_closed_orders(int ticket) {
+    //for(int i = 0; i < ArraySize(order_status_list); i++) {
+    //if(order_status_list[i].status) {
+    //if(OrderSelect(order_status_list[i].GetTicketOrder(), SELECT_BY_TICKET, MODE_HISTORY)) {
+    printf("Clean Close Order " + IntegerToString(ticket) + "Successfully!");
+    order_status_list[check_order_status_list_index(ticket)].status = false;
 }
 //+------------------------------------------------------------------+
