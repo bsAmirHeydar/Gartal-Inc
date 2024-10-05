@@ -51,6 +51,7 @@ class organization_orders {
     double tp[];
     double trail_trigger;
     double add_vol_trigger;
+    double sl_Value;
 
 
     organization_orders(void) {
@@ -75,6 +76,7 @@ class organization_orders {
             add_vol_mode_first = false;
             add_vol_mode_final = false;
             is_trail_in_this_candle = false;
+            sl_Value = MathAbs(entry - sl[0]);
         }
     }
     double getTrailTriggerPrice() {
@@ -107,15 +109,6 @@ class organization_orders {
     }
     int GetTicketOrder() {
         return ticket;
-    }
-    double getSLValue() {
-        if(type == OP_BUY) {
-            return (entry - sl[0]);// * Point;
-        } else if(type == OP_SELL) {
-            return (sl[0] - entry);// * Point;
-        } else {
-            return -1;
-        }
     }
     void delObject() {
         status = false;
