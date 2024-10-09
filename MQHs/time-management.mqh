@@ -58,7 +58,9 @@ input int close_hour3 = 23; //close hour 3
 input int close_minute3 = 55; // close minute 3
 class timeSectionManage {
   public:
-    int start5;
+    float sectionTP;
+    float sectionSL;
+    
     timeSectionManage(void);
     ~timeSectionManage(void);
 };

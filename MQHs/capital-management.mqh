@@ -6,6 +6,7 @@
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link      "https://www.mql5.com"
 #property strict
+#include "order-management.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -34,5 +35,15 @@ enum capital_management_mode_filter_option {
 //input string non_entry0 = "-----Capital Management-----";
 //input capital_management_mode_filter_option capital_man5agement_mode = 0;
 void capital_management() {
+}
+input string martingleTitr = "----- Martingle & Anti Management -----";
+input double martingleFactor = 1.0; //Logarithmic Martingle Factor
+input int plusInProfit = 1; //+ Volume Factor (Win)
+input int plusInLoss = 1; // - Volume Factor (Loss)
+input int maxInProfitStep = 20; //Max Step in (Win)
+input int maxInLossStep = 20; //Max Step in (Loss)
+input bool resetVolumeFactor = false; //Reset Volume Factor in (Win)
+void martingleRun(){
+   volumeFactor = MathPow(martingleFactor, (-counterProfit));
 }
 //+------------------------------------------------------------------+
