@@ -28,13 +28,14 @@
 //+------------------------------------------------------------------+
 //Inputs
 input string non0_time = "-----Time Management-----";
-input string non1_time = "** Section 1 **";
-input int start_hour = 1; //Start Hour 1
-input int start_minute = 30; //Start Hinute 1
-input int end_hour = 23; //End Hour 1
-input int end_minute = 55; //End Minute 1
-input int close_hour = 23; //close hour 1
-input int close_minute = 55; // close minute 1
+input string non1_time0 = "** Section 0 **";
+input int start_hour = 1; //Start Hour 0
+input int start_minute = 30; //Start Hinute 0
+input int end_hour = 23; //End Hour 0
+input int end_minute = 55; //End Minute 0
+input int close_hour = 23; //close hour 0
+input int close_minute = 55; // close minute 0
+input string non1_time1 = "** Section 1 **";
 input int start_hour1 = 1; //Start Hour 1
 input int start_minute1 = 30; //Start Hinute 1
 input int end_hour1 = 23; //End Hour 1
