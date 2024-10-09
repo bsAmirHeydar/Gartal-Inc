@@ -95,13 +95,13 @@ bool detection241009detection_candle_vas(int typeCondition) {
     }
     bool buySignal = true, sellSignal = true;
     for(int i = 2; i <= coutVasCandle + 1; i++) {
-        if(!(Close[i] > Open[i])) {
+        if(!(Close[i] < Open[i])) {
             buySignal = false;
             break;
         }
     }
     for(int i = 2; i <= coutVasCandle + 1; i++) {
-        if(!(Close[i] < Open[i])) {
+        if(!(Close[i] > Open[i])) {
             sellSignal = false;
             break;
         }
