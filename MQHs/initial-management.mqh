@@ -28,8 +28,14 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
+enum assetCalculate {
+    assetByEquity = 0, //Equity
+    assetByBalance = 1, //Balance
+};
 input string iniNone = "----- INITIALIZE -----";
+input assetCalculate assetModeDayTP = 0;
 input float assetDayTP = 500.0; //Asset $ TP Day
+input assetCalculate assetModeDaySL = 0;
 input float assetDaySL = 150.0; //Asset $ SL Day
 
 //+------------------------------------------------------------------+
@@ -41,8 +47,10 @@ double iniBalance;
 void Initialize() {
     datetime serverTime = TimeCurrent();
     int currentDay = TimeDay(serverTime);
-    if(currentDay != lastDay) {
-        if(AccountEquity() + assetDayTP >= iniBalance && mManagePermission) {
+    if(currentDay == lastDay) {
+        if((((assetModeDayTP == 0 && AccountEquity() >= iniBalance + assetDayTP) || (assetModeDayTP == 1 &&  AccountBalance() >= iniBalance + assetDayTP))
+                || ((assetModeDaySL == 0 && AccountEquity() <= iniBalance - assetDaySL) || (assetModeDaySL == 1 && AccountBalance() <= iniBalance - assetDaySL)))
+                && mManagePermission) {
             CloseTrades(1);
             CloseTrades(-1);
             mManagePermission = false;
@@ -52,5 +60,6 @@ void Initialize() {
         mManagePermission = true;
         iniBalance = AccountBalance();
     }
+    Comment(mManagePermission);
 }
 //+------------------------------------------------------------------+

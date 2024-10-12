@@ -52,12 +52,13 @@ class organization_orders {
     double trail_trigger;
     double add_vol_trigger;
     double sl_Value;
+    bool ghostMode;
 
 
     organization_orders(void) {
     }
 
-    void newOrder(int input_key_ticket) {
+    void newOrder(int input_key_ticket, bool isReal) {
         if(OrderSelect(OrdersTotal() - 1, SELECT_BY_POS, MODE_TRADES)) {
             ticket = OrderTicket();
             key_ticket = input_key_ticket;
@@ -159,9 +160,9 @@ int check_order_status_list_index(int ticket) {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void new_order_for_organization(int keyTicket) {
+void new_order_for_organization(int keyTicket, bool isReal) {
     ArrayResize(order_status_list, ArraySize(order_status_list) + 1, 0);
-    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket);
+    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket, isReal);
 }
 //+------------------------------------------------------------------+
 //|                                                                  |
