@@ -53,12 +53,16 @@ class organization_orders {
     double add_vol_trigger;
     double sl_Value;
     bool ghostMode;
+    double commission;
+    double profit;
+    double volume;
+    double volFactor;
 
 
     organization_orders(void) {
     }
 
-    void newOrder(int input_key_ticket, bool isReal) {
+    void newOrder(int input_key_ticket, bool isReal, double vol, double volume_factor) {
         if(OrderSelect(OrdersTotal() - 1, SELECT_BY_POS, MODE_TRADES)) {
             ticket = OrderTicket();
             key_ticket = input_key_ticket;
@@ -143,6 +147,18 @@ class organization_orders {
         }
         return false;
     }
+    void checkGhostOrder() {
+        if(type == OP_BUY) {
+            if(Bid >= tp[ArraySize(tp) - 1]) { //TP for Buy
+                profit = (Bid - entry) - commission;
+                status = false;
+            } else if(Bid <= sl[ArraySize(sl) - 1]) {
+                profit = (Bid - entry) - commission;
+                status = false;
+            }
+        } else if(type == OP_SELL) {
+        }
+    }
 };
 organization_orders order_status_list[];
 
@@ -160,9 +176,9 @@ int check_order_status_list_index(int ticket) {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void new_order_for_organization(int keyTicket, bool isReal) {
+void new_order_for_organization(int keyTicket, bool isReal, double vol, double volume_factor) {
     ArrayResize(order_status_list, ArraySize(order_status_list) + 1, 0);
-    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket, isReal);
+    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket, isReal, vol, volume_factor);
 }
 //+------------------------------------------------------------------+
 //|                                                                  |
