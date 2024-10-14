@@ -6,6 +6,7 @@
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link "https://www.mql5.com"
 #property strict
+#include "order-management.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -40,6 +41,7 @@ class organization_orders {
 
   public:
     bool status;
+    int orderModel;
     int type;
     int result_related_ticket[];
     bool is_trail_in_this_candle;
@@ -62,7 +64,7 @@ class organization_orders {
     organization_orders(void) {
     }
 
-    void newOrder(int input_key_ticket, bool isReal, double vol, double volume_factor) {
+    void newOrder(int input_key_ticket, bool isReal, double vol, double volume_factor, int order_model) {
         if(OrderSelect(OrdersTotal() - 1, SELECT_BY_POS, MODE_TRADES)) {
             ticket = OrderTicket();
             key_ticket = input_key_ticket;
@@ -82,6 +84,10 @@ class organization_orders {
             add_vol_mode_final = false;
             is_trail_in_this_candle = false;
             sl_Value = MathAbs(entry - sl[0]);
+            volume = vol;
+            volFactor = volume_factor;
+            orderModel = order_model;
+            commission = (volFactor * volume) * commissionPerLot;
         }
     }
     double getTrailTriggerPrice() {
@@ -148,15 +154,52 @@ class organization_orders {
         return false;
     }
     void checkGhostOrder() {
+        double pointValue = CalculatePointValue();  // محاسبه Pip Value
         if(type == OP_BUY) {
             if(Bid >= tp[ArraySize(tp) - 1]) { //TP for Buy
-                profit = (Bid - entry) - commission;
+                //double sl_point = sl_value / Point;
+                profit = ((Bid - entry) / Point) * pointValue - commission;
                 status = false;
             } else if(Bid <= sl[ArraySize(sl) - 1]) {
-                profit = (Bid - entry) - commission;
+                profit = ((Bid - entry) / Point) * pointValue - commission;
                 status = false;
             }
         } else if(type == OP_SELL) {
+            if(Ask <= tp[ArraySize(tp) - 1]) {
+                profit = ((entry - Ask) / Point) * pointValue - commission;
+                status = false;
+            } else if(Ask >= sl[ArraySize(sl) - 1]) {
+                profit = ((entry - Ask) / Point) * pointValue - commission;
+                status = false;
+            }
+        }
+    }
+    void checkExecuteOrder() {
+        if(type != OP_BUY && type != OP_SELL) {
+            if(type == OP_BUYLIMIT) {
+                if(Ask <= entry) {
+                    entry = Ask;
+                    type = OP_BUY;
+                }
+            }
+            if(type == OP_BUYSTOP) {
+                if(Ask >= entry) {
+                    entry = Ask;
+                    type = OP_BUY;
+                }
+            }
+            if(type == OP_SELLLIMIT) {
+                if(Bid >= entry) {
+                    entry = Bid;
+                    type = OP_SELL;
+                }
+            }
+            if(type == OP_SELLSTOP) {
+                if(Bid <= entry) {
+                    entry = Bid;
+                    type = OP_SELL;
+                }
+            }
         }
     }
 };
@@ -176,9 +219,9 @@ int check_order_status_list_index(int ticket) {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void new_order_for_organization(int keyTicket, bool isReal, double vol, double volume_factor) {
+void new_order_for_organization(int keyTicket, bool isReal, double vol, double volume_factor, int order_model) {
     ArrayResize(order_status_list, ArraySize(order_status_list) + 1, 0);
-    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket, isReal, vol, volume_factor);
+    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket, isReal, vol, volume_factor, order_model);
 }
 //+------------------------------------------------------------------+
 //|                                                                  |
