@@ -51,8 +51,8 @@ void Initialize() {
         if((((assetModeDayTP == 0 && AccountEquity() >= iniBalance + assetDayTP) || (assetModeDayTP == 1 &&  AccountBalance() >= iniBalance + assetDayTP))
                 || ((assetModeDaySL == 0 && AccountEquity() <= iniBalance - assetDaySL) || (assetModeDaySL == 1 && AccountBalance() <= iniBalance - assetDaySL)))
                 && mManagePermission) {
-            CloseTrades(1);
-            CloseTrades(-1);
+            closeWholeOrder(1);
+            closeWholeOrder(-1);
             mManagePermission = false;
         }
     } else {
