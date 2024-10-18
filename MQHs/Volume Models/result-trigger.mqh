@@ -1,11 +1,12 @@
 //+------------------------------------------------------------------+
-//|                                         stop-loss-management.mqh |
+//|                                               result-trigger.mqh |
 //|                                  Copyright 2024, MetaQuotes Ltd. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link      "https://www.mql5.com"
 #property strict
+#include "factor241016-martingle and anti.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -26,29 +27,20 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-enum sl_mode_option {
-    sl_mode_candle = 0, //Candle
-    sl_mode_fix_point = 1, //Fix Point
-    sl_mode_ATR = 2, //ATR
-};
-input string sl_non0 = "-----SL Management-----";
-input sl_mode_option sl_mode = 0;
-input double sl_candle_factor = 1;
-input double slAtrFactor = 1.0;
-double calculateSL(int typeCondition, double slValue) {
-    double value = 0.0;
-    if(sl_mode == 0) {
-        value = sl_candle_factor * slValue;
+void inProfit() {
+    if(martingleCounter + martingleInProfit <= maxInProfitStep) {
+        martingleCounter += martingleInProfit;
     }
-    else if(sl_mode == 2)
-           {
-            value = slAtrFactor * iATR(Symbol(), PERIOD_CURRENT, 14, 0);
-           }
-    if(typeCondition == 1) {
-        return Close[1] - value;
-    } else if(typeCondition == -1) {
-        return Close[1] + value;
+    if(martingleResetCounter) {
+        martingleCounter = 0;
     }
-    return 0;
 }
 //+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void  inLoss() {
+    if(martingleCounter - martingleInLoss >= -maxInLossStep) {
+        martingleCounter -= martingleInLoss;
+    }
+
+}

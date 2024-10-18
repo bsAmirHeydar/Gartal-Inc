@@ -1,0 +1,55 @@
+void check_profit1() {
+// اگر برای اولین بار ربات اجرا می‌شود
+    if(initialHistoryTotal == -1) {
+        initialHistoryTotal = OrdersHistoryTotal(); // ذخیره تعداد کل معاملات تاریخی در شروع ربات
+    }
+    for(int i = OrdersHistoryTotal() - 1; i >= lastHistoryTotal; i--) {
+        if(i < initialHistoryTotal) { // بررسی اینکه معامله قبلی از شروع ربات نباشد
+            break;
+        }
+        if(OrderSelect(i, SELECT_BY_POS, MODE_HISTORY)) {
+            if(OrderMagicNumber() == magic_number) {
+                if(OrderCloseTime() >= 0 && (OrderType() == OP_BUY || OrderType() == OP_SELL)) {
+                    if(order_status_list[check_order_status_list_index(OrderTicket())].status) {
+                        sum_commission += OrderLots() * commissionPerLot;
+                        printf("Sum commission: " + DoubleToString(sum_commission, 3));
+                        c1lean_closed_orders(OrderTicket());
+                        //printf(OrderTicket());
+                        // بررسی اینکه آیا معامله سودآور بوده است
+                        if(OrderProfit() > 0) {
+                            if(counterProfit + plusInProfit <= maxInProfitStep) {
+                                counterProfit += plusInProfit;
+                            }
+                            if(resetVolumeFactor) {
+                                counterProfit = 0;
+                            }
+                            // معامله سودآور است، اجرای کارهای خاص
+                            Print("آخرین معامله بسته شد و سودآور بود! سود: ", OrderProfit());
+                            if(OrderType() == OP_BUY)
+                                counter_loss_buy = end_sl_buy;
+                            else if(OrderType() == OP_SELL)
+                                counter_loss_sell = end_sl_sell;
+                            // به‌روزرسانی آخرین تیکت
+                            last_is_profit = true;
+                            // lastTicket = OrderTicket();
+                            // توقف حلقه پس از یافتن اولین معامله
+                            // break;
+                        } else {
+                            if(counterProfit - plusInLoss >= -maxInLossStep) {
+                                counterProfit -= plusInLoss;
+                            }
+                            last_is_profit = false;
+                            // lastTicket = OrderTicket();
+                            // break;
+                        }
+                    }
+                    // else {
+                    //     last_is_profit = false;
+                    //     break;
+                    // }
+                }
+            }
+        }
+    }
+    lastHistoryTotal  = OrdersHistoryTotal();
+}

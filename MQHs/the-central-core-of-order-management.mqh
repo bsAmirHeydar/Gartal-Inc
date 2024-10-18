@@ -177,24 +177,24 @@ class organization_orders {
                 //double sl_point = sl_value / Point;
                 profit = ((Bid - entry) / Point) * pointValue - commission;
                 sum_commission += commission;
-                newRec(ticket, ghostMode, profit, volumeFactor);
+                newRec(ticket, type, ghostMode, profit, volumeFactor);
                 status = false;
             } else if(Bid <= sl[ArraySize(sl) - 1]) {
                 profit = ((Bid - entry) / Point) * pointValue - commission;
                 sum_commission += commission;
-                newRec(ticket, ghostMode, profit, volumeFactor);
+                newRec(ticket, type, ghostMode, profit, volumeFactor);
                 status = false;
             }
         } else if(type == OP_SELL) {
             if(Ask <= tp[ArraySize(tp) - 1]) {
                 profit = ((entry - Ask) / Point) * pointValue - commission;
                 sum_commission += commission;
-                newRec(ticket, ghostMode, profit, volumeFactor);
+                newRec(ticket, type, ghostMode, profit, volumeFactor);
                 status = false;
             } else if(Ask >= sl[ArraySize(sl) - 1]) {
                 profit = ((entry - Ask) / Point) * pointValue - commission;
                 sum_commission += commission;
-                newRec(ticket, ghostMode, profit, volumeFactor);
+                newRec(ticket, type, ghostMode, profit, volumeFactor);
                 status = false;
             }
         }

@@ -1,5 +1,5 @@
 //+------------------------------------------------------------------+
-//|                                         stop-loss-management.mqh |
+//|                                             random-detection.mqh |
 //|                                  Copyright 2024, MetaQuotes Ltd. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
@@ -26,29 +26,20 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-enum sl_mode_option {
-    sl_mode_candle = 0, //Candle
-    sl_mode_fix_point = 1, //Fix Point
-    sl_mode_ATR = 2, //ATR
-};
-input string sl_non0 = "-----SL Management-----";
-input sl_mode_option sl_mode = 0;
-input double sl_candle_factor = 1;
-input double slAtrFactor = 1.0;
-double calculateSL(int typeCondition, double slValue) {
-    double value = 0.0;
-    if(sl_mode == 0) {
-        value = sl_candle_factor * slValue;
+input bool isRandomDetection = false;
+bool randDetection(int typeCondition) {
+    if(!isRandomDetection) {
+        return true;
     }
-    else if(sl_mode == 2)
-           {
-            value = slAtrFactor * iATR(Symbol(), PERIOD_CURRENT, 14, 0);
-           }
+    int signal = rand();
+    bool buySignal = signal > (32767 / 2);
+    bool sellSignal = signal < (32767 / 2);
     if(typeCondition == 1) {
-        return Close[1] - value;
+        return buySignal;
     } else if(typeCondition == -1) {
-        return Close[1] + value;
+        return sellSignal;
+    } else {
+        return false;
     }
-    return 0;
 }
 //+------------------------------------------------------------------+
