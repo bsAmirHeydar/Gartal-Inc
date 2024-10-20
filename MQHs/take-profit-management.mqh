@@ -51,7 +51,7 @@ double calculateTP(int typeCondition, double slValue, double entry) {
     }
     double commission = 0.0;
     if(tp_calculate_with_commission) {
-        commission = volume(slValue, typeCondition) * commissionPerLot;
+        commission = volume(slValue + spread, typeCondition) * commissionPerLot;
         value += (commission / CalculatePointValue()) * Point;
     }
     if(typeCondition == 1) {
