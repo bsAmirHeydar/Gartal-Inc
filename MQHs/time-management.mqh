@@ -26,8 +26,22 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
+enum dayOfWeek {
+    Sunday,
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Staurday
+};
 //Inputs
 input string non0_time = "-----Time Management-----";
+input dayOfWeek Day1 = 1;
+input dayOfWeek Day2 = 2;
+input dayOfWeek Day3 = 3;
+input dayOfWeek Day4 = 4;
+input dayOfWeek Day5 = 5;
 input string non1_time0 = "** Section 0 **";
 input int start_hour = 1; //Start Hour 0
 input int start_minute = 30; //Start Hinute 0
@@ -59,14 +73,6 @@ input int end_hour3 = 23; //End Hour 3
 input int end_minute3 = 55; //End Minute 3
 input int close_hour3 = 23; //close hour 3
 input int close_minute3 = 55; // close minute 3
-class timeSectionManage {
-  public:
-    float sectionTP;
-    float sectionSL;
-
-    timeSectionManage(void);
-    ~timeSectionManage(void);
-};
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -75,6 +81,16 @@ bool inTime() {
     int currentHour = TimeHour(serverTime);
     int currentMinute = TimeMinute(serverTime);
     int currentDay = TimeDay(serverTime);
+    int currentDayOfWeek = TimeDayOfWeek(serverTime);
+    if(
+        currentDayOfWeek != Day1 &&
+        currentDayOfWeek != Day2 &&
+        currentDayOfWeek != Day3 &&
+        currentDayOfWeek != Day4 &&
+        currentDayOfWeek != Day5
+    ) {
+        return false;
+    }
     if((currentHour > start_hour || (currentHour == start_hour && currentMinute > start_minute)) &&
             (currentHour < end_hour || (currentHour == end_hour && currentMinute < end_minute)) ) {
         return true;
