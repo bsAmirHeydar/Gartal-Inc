@@ -37,18 +37,27 @@ enum tp_mode_option {
 input tp_mode_option tp_mode = 0;
 input bool tp_calculate_with_spread = false;
 input bool tp_calculate_with_commission = false;
-double calculateTP(int typeCondition, double slValue) {
+double calculateTP(int typeCondition, double slValue, double entry) {
     double value = 0.0;
+    double spread = Ask - Bid;
     if(tp_calculate_with_spread) {
-        slValue += (Ask - Bid);
+        slValue += spread;
     }
     if(tp_mode == 0) {
         value = slValue * tp_factor;
+        if(typeCondition == -1) {
+            value -= spread;
+        }
+    }
+    double commission = 0.0;
+    if(tp_calculate_with_commission) {
+        commission = volume(slValue, typeCondition) * commissionPerLot;
+        value += (commission / CalculatePointValue()) * Point;
     }
     if(typeCondition == 1) {
-        return Bid + value;
+        return entry + value;
     } else if(typeCondition == -1) {
-        return (Bid - value) + (Ask - Bid);
+        return (entry - value) + spread;
     }
     return 0.0;
 }
