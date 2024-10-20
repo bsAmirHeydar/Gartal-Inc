@@ -27,9 +27,13 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-double buy_volume_factor= 1, sell_volume_factor= 1;
+double buy_volume_factor = 1, sell_volume_factor = 1;
 input string factorNon0 = "$$$$$$$$$$$$$$$$$$$$$     VOLUME FACTOR MODELING     $$$$$$$$$$$$$$$$$$$$$"; //#########   Factor modeling (LEVEL 2)   #########
-void factorEngine(){
-   
+void factorEngine(int typeCondition) {
+    if(typeCondition == 1) {
+        buy_volume_factor = martingleRun(typeCondition);
+    } else if(typeCondition == -1) {
+        sell_volume_factor = martingleRun(typeCondition);
+    }
 }
 //+------------------------------------------------------------------+
