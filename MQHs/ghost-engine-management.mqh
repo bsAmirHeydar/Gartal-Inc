@@ -6,7 +6,6 @@
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link      "https://www.mql5.com"
 #property strict
-#include "Volume Models/result-trigger.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -53,11 +52,6 @@ class resultLevel2 {
         equity = initialBalance + sumProfit + sumEquityOpenOrders;
         sumProfit += profit;
         balance = initialBalance + sumProfit;
-        if(profit > 0) {
-            inProfit();
-        } else if(profit < 0) {
-            inLoss();
-        }
     }
     ~resultLevel2(void) {}
 };
