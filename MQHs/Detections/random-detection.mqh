@@ -27,13 +27,24 @@
 // #import
 //+------------------------------------------------------------------+
 input bool isRandomDetection = false;
+int randomCounter;
 bool randDetection(int typeCondition) {
     if(!isRandomDetection) {
         return true;
     }
+    if(randomCounter > 0) {
+        randomCounter --;
+    }
+    if(randomCounter != 0) {
+        return false;
+    }
     int signal = rand();
     bool buySignal = signal > (32767 / 2);
     bool sellSignal = signal < (32767 / 2);
+    if(randomCounter == 0) {
+        randomCounter = rand() / 1000;
+        printf(DoubleToString(randomCounter));
+    }
     if(typeCondition == 1) {
         return buySignal;
     } else if(typeCondition == -1) {
