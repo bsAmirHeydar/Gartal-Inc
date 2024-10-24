@@ -1,12 +1,12 @@
 //+------------------------------------------------------------------+
-//|                                           main-volume-factor.mqh |
+//|                                    ghost241024-simple-profit.mqh |
 //|                                  Copyright 2024, MetaQuotes Ltd. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link      "https://www.mql5.com"
 #property strict
-#include "factor241016-martingle and anti.mqh"
+#include "../ghost-engine-management.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -27,16 +27,14 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-double buy_volume_factor = 1, sell_volume_factor = 1;
-input double iniRisk = 100.0; //Risk per order
-input double newRiskPercentage = 0.01;
-double risk = iniRisk;
-input string factorNon0 = "$$$$$$$$$$$$$$$$$$$$$     VOLUME FACTOR MODELING     $$$$$$$$$$$$$$$$$$$$$"; //#########   Factor modeling (LEVEL 2)   #########
-void factorEngine(int typeCondition) {
-    if(typeCondition == 1) {
-        buy_volume_factor = martingleRun(typeCondition);
-    } else if(typeCondition == -1) {
-        sell_volume_factor = martingleRun(typeCondition);
+input bool isGhostSimpleProfit = false; //Simple Ghost - Profit
+bool ghost241024_simple_profit() {
+    if(!isGhostSimpleProfit) {
+        return true;
     }
+    if(Profit(0, 1) > 0) {
+        return true;
+    }
+    return false;
 }
 //+------------------------------------------------------------------+

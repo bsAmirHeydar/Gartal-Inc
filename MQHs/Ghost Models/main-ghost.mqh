@@ -7,6 +7,7 @@
 #property link      "https://www.mql5.com"
 #property strict
 #include "../ghost-engine-management.mqh"
+#include "ghost241024-simple-profit.mqh"
 
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -41,8 +42,8 @@ void ghostEngine() {
         buyIsReal = true;
         sellIsReal = true;
     } else {
-        buyIsReal = ghost241016_simple_loss(1);
-        sellIsReal = ghost241016_simple_loss(-1);
+        buyIsReal = ghost241016_simple_loss(1) && ghost241024_simple_profit();
+        sellIsReal = ghost241016_simple_loss(-1) && ghost241024_simple_profit();
     }
 }
 //+------------------------------------------------------------------+
