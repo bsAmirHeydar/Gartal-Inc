@@ -81,13 +81,13 @@ bool detection241024_roulette(int typeCondition) {
         }
     }
     if(typeCondition == 1) {
-        if(!isHedge) {
-           // closeWholeOrder(-1);
+        if(!isHedge && buySignal) {
+           closeWholeOrder(-1);
         }
         return buySignal;
     } else if(typeCondition == -1) {
-        if(!isHedge) {
-            //closeWholeOrder(1);
+        if(!isHedge && sellSignal) {
+            closeWholeOrder(1);
         }
         return sellSignal;
     }
