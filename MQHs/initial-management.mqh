@@ -31,12 +31,13 @@
 enum assetCalculate {
     assetByEquity = 0, //Equity
     assetByBalance = 1, //Balance
+    assetOFF = 3, //OFF
 };
 input string iniNone = "----- INITIALIZE -----";
-input assetCalculate assetModeDayTP = 0;
-input float assetDayTP = 500.0; //Asset $ TP Day
-input assetCalculate assetModeDaySL = 0;
-input float assetDaySL = 150.0; //Asset $ SL Day
+input assetCalculate assetModeDayTP = 3;
+input float assetDayTP = 0.0; //Asset $ TP Day
+input assetCalculate assetModeDaySL = 3;
+input float assetDaySL = 0.0; //Asset $ SL Day
 
 //+------------------------------------------------------------------+
 //|                                                                  |

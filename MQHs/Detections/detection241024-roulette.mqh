@@ -34,10 +34,10 @@ enum rouletteModeOption {
     Trend = 0,
     Consolidation = 1,
 };
-input string detection241024Name = "--- detection241024-roulette ---";
+input string detection241024Name = "--- Detection Roulette ---";
 input bool isDetectionRoulette = false;
 input rouletteModeOption rouletteMode = 0; //Roulette Mode
-input bool isHedge = false; //Close Order before Open
+input bool isCloseBeforOpenRoulette = true; //Close Order before Open
 input int detection241024MAperiod = 50; //MA Period
 input bool isHMAforRoulette = true; //is HMA?
 input MA_mode_option detection241024MAmode = 0; //(if HMA is false) MA Mode
@@ -86,12 +86,12 @@ bool detection241024_roulette(int typeCondition) {
         }
     }
     if(typeCondition == 1) {
-        if(!isHedge && buySignal) {
+        if(isCloseBeforOpenRoulette && buySignal) {
             closeWholeOrder(-1);
         }
         return buySignal;
     } else if(typeCondition == -1) {
-        if(!isHedge && sellSignal) {
+        if(isCloseBeforOpenRoulette && sellSignal) {
             closeWholeOrder(1);
         }
         return sellSignal;

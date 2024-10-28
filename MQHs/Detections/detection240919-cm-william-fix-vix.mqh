@@ -28,7 +28,7 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-input string non2 = "-----detection240919-cm-william-fix-vix-----";
+input string non2 = "--- Detection CM William Fix Vix-----";
 input bool is_alert3 = false; //Alert 3 SAFE
 input bool is_alert4 = false; //Alert 4 Aggressive
 int str = 3; //Entry Price Action Strength--Close > X Bars Back
