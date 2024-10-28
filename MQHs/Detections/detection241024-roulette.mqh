@@ -9,6 +9,7 @@
 #include "../public-tools.mqh"
 #include "../stop-loss-management.mqh"
 #include "../order-management.mqh"
+#include "../indicator-management.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -38,14 +39,18 @@ input bool isDetectionRoulette = false;
 input rouletteModeOption rouletteMode = 0; //Roulette Mode
 input bool isHedge = false; //Close Order before Open
 input int detection241024MAperiod = 50; //MA Period
-input MA_mode_option detection241024MAmode = 0; //MA Mode
+input bool isHMAforRoulette = true; //is HMA?
+input MA_mode_option detection241024MAmode = 0; //(if HMA is false) MA Mode
 input double detection241024SmallATRfactor = 3.0; //Small ATR Factor
 input double detection241024BigATRfactor = 5.0; //Big ATR Factor
 bool detection241024_roulette(int typeCondition) {
     if(!isDetectionRoulette) {
         return true;
     }
-    double ma = iMA(Symbol(), PERIOD_CURRENT, detection241024MAperiod, 0, ConvertToMAType(detection241024MAmode), PRICE_CLOSE, 1);
+    double ma = 0.0;
+    if(isHMAforRoulette) {
+        ma = HMA(detection241024MAperiod, 1, PRICE_CLOSE);
+    } else ma = iMA(Symbol(), PERIOD_CURRENT, detection241024MAperiod, 0, ConvertToMAType(detection241024MAmode), PRICE_CLOSE, 1);
     double smallChannelValue = detection241024SmallATRfactor * iATR(Symbol(), PERIOD_CURRENT, 14, 1);
     double bigChannelValue = detection241024BigATRfactor * iATR(Symbol(), PERIOD_CURRENT, 14, 1);
     double upperBig = ma + bigChannelValue;
@@ -82,7 +87,7 @@ bool detection241024_roulette(int typeCondition) {
     }
     if(typeCondition == 1) {
         if(!isHedge && buySignal) {
-           closeWholeOrder(-1);
+            closeWholeOrder(-1);
         }
         return buySignal;
     } else if(typeCondition == -1) {
