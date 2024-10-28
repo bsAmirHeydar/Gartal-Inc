@@ -61,6 +61,6 @@ void Initialize() {
         mManagePermission = true;
         iniBalance = AccountBalance();
     }
-    Comment(mManagePermission);
+    //Comment(mManagePermission);
 }
 //+------------------------------------------------------------------+
