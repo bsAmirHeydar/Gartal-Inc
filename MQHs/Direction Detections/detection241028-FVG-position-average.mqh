@@ -26,9 +26,15 @@
 // #import "stdlib.ex5"
 //   string ErrorDescription(int error_code);
 // #import
-//+------------------------------------------------------------------+
+//+------------------------------------------------------------------+\
+enum FVGpositionModeOption {
+    normalWithoutRange__fvg = 0,
+    justRange__fvg = 1,
+    all__fvg = 2,
+};
 input string fvgPositionName = "Direction --- ** FVG Position Average ** ---";
 input bool isFvgPositionAverage = false; // ?
+input FVGpositionModeOption FVGpositionMode = 1; //FVG Mode
 class fvgPosition {
   public:
     double price;
@@ -58,13 +64,15 @@ double averageFvgDown = 0.0;
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+bool FVGbuySignal = false, FVGsellSignal = false;
 bool detection241028_FVG_position_average(int typeCondition, int shift) {
     if(!isFvgPositionAverage) {
         return true;
     }
     int fvgCount = 30;
-    bool buySignal = false, sellSignal = false;
     if(typeCondition == 0) {
+        FVGbuySignal = false;
+        FVGsellSignal = false;
         checkNewFVG(shift);
         if(ArraySize(fvgUpRecords) >= fvgCount) {
             int lastArrayUp = ArraySize(fvgUpRecords) - 1;
@@ -88,17 +96,41 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
         }
         double hst = High[iHighest(Symbol(), PERIOD_CURRENT, MODE_HIGH, 5, shift + 1)];
         double lst = Low[iLowest(Symbol(), PERIOD_CURRENT, MODE_LOW, 5, shift + 1)];
-        Comment(ArraySize(fvgDownRecords)  + "\n" + averageFvgDown + "\n" + lst);
+        //Comment(ArraySize(fvgDownRecords)  + "\n" + averageFvgDown + "\n" + lst);
         //dotDraw(averageFvgUp, 1);
-        buySignal = hst >= averageFvgUp && averageFvgUp != 0.0;
-        if(buySignal) {
+        FVGbuySignal = hst >= averageFvgUp && averageFvgUp != 0.0;
+        if(FVGbuySignal) {
             PlotIndividualLine(averageFvgUp, clrGreen, shift + 1);
             FillArea(Low[shift + 1], averageFvgUp, clrNavy, shift + 1, "fvg Up");
         }
-        sellSignal = lst <= averageFvgDown && averageFvgDown != 0.0;
-        if(sellSignal) {
+        FVGsellSignal = lst <= averageFvgDown && averageFvgDown != 0.0;
+        if(FVGsellSignal) {
             PlotIndividualLine(averageFvgDown, clrRed, shift + 1);
             FillArea(High[shift + 1], averageFvgDown, clrBrown, shift + 1, "fvg Down");
+        }
+    } else {
+        if(FVGpositionMode == 0) {
+            if(FVGbuySignal && FVGsellSignal) {
+                return false;
+            }
+            if(typeCondition == 1) {
+                return FVGbuySignal;
+            } else if(typeCondition == -1) {
+                return FVGsellSignal;
+            }
+        } else if(FVGpositionMode == 1) {
+            if(FVGbuySignal && FVGsellSignal) {
+                return true;
+            }
+        } else if(FVGpositionMode == 2) {
+            if(FVGbuySignal && FVGsellSignal) {
+                return true;
+            }
+            if(typeCondition == 1) {
+                return FVGbuySignal;
+            } else if(typeCondition == -1) {
+                return FVGsellSignal;
+            }
         }
     }
     return false;
