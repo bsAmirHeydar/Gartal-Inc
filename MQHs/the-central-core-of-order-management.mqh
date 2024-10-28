@@ -309,6 +309,15 @@ void checkGhostOrders() {
             order_status_list[i].checkCloseGhostOrder();
         }
     }
-    
+}
+//+------------------------------------------------------------------+
+double calculateCommission() {
+    double commission = 0.0;
+    for(int i = 0; i < ArraySize(order_status_list); i++) {
+        if(!order_status_list[i].ghostMode) {
+            commission += order_status_list[i].commission;
+        }
+    }
+    return commission;
 }
 //+------------------------------------------------------------------+
