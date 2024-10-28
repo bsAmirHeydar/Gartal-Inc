@@ -34,9 +34,9 @@ double risk = iniRisk;
 input string factorNon0 = "$$$$$$$$$$$$$$$$$$$$$     VOLUME FACTOR MODELING     $$$$$$$$$$$$$$$$$$$$$"; //#########   Factor modeling (LEVEL 2)   #########
 void factorEngine(int typeCondition) {
     if(typeCondition == 1) {
-        buy_volume_factor = martingleRun(typeCondition);
+        buy_volume_factor = GRun(typeCondition);
     } else if(typeCondition == -1) {
-        sell_volume_factor = martingleRun(typeCondition);
+        sell_volume_factor = GRun(typeCondition);
     }
 }
 //+------------------------------------------------------------------+
