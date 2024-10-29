@@ -101,7 +101,7 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
         FVGbuySignal = hst >= averageFvgUp && averageFvgUp != 0.0;
         if(FVGbuySignal) {
             PlotIndividualLine(averageFvgUp, clrGreen, shift + 1);
-            FillArea(Low[shift + 1], averageFvgUp, clrNavy, shift + 1, "fvg Up");
+            FillArea(Low[shift + 1], averageFvgUp, C'21,174,185', shift + 1, "fvg Up");
         }
         FVGsellSignal = lst <= averageFvgDown && averageFvgDown != 0.0;
         if(FVGsellSignal) {
