@@ -49,10 +49,12 @@ double calculateTP(int typeCondition, double slValue, double entry) {
             value -= spread;
         }
     }
-    slValue -= spread;
+    if(tp_calculate_with_spread)
+        slValue -= spread;
     double commission = 0.0;
     if(tp_calculate_with_commission) {
         commission = volume(slValue + spread, typeCondition) * commissionPerLot;
+        printf("probebly +Commission: " + DoubleToString((commission / CalculatePointValue())) + "$" );
         value += (commission / CalculatePointValue()) * Point;
     }
     if(typeCondition == 1) {
