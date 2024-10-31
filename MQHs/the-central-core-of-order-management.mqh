@@ -71,6 +71,9 @@ class organization_orders {
         ticket = Ticket;
         Ticket += 1;
         key_ticket = input_key_ticket;
+        if(key_ticket != -1) {
+            insertSubTicket(key_ticket, ticket);
+        }
         type = order_type;
         entry = inputEntry;
         ArrayResize(sl, 1, 0);
@@ -101,7 +104,7 @@ class organization_orders {
     }
     void modifyTrailTrigger(double input_trail_trigger) {
         trail_trigger = input_trail_trigger;
-        printf("Ticket " + IntegerToString(ticket) + " : " + "new Trigger : " + DoubleToString(trail_trigger));
+        //printf("Ticket " + IntegerToString(ticket) + " : " + "new Trigger : " + DoubleToString(trail_trigger));
     }
     double getAddVolTriggerPrice() {
         return add_vol_trigger;
@@ -148,14 +151,6 @@ class organization_orders {
     }
     void plusAddVolCounter() {
         add_vol_count += 1;
-    }
-    void sub_ticket_list(int input_key_ticket) {
-        for(int i = 0; i < ArraySize(order); i++) {
-            if(order[i].GetKeyTicket() == input_key_ticket && order[i].status) {
-                ArrayResize(result_related_ticket, ArraySize(result_related_ticket) + 1, 0);
-                result_related_ticket[ArraySize(result_related_ticket) - 1] = order[i].GetTicketOrder();
-            }
-        }
     }
     bool isKey(int input_ticket) {
         for(int i = 0; i < ArraySize(order); i++) {
@@ -291,6 +286,11 @@ int count_keyTicket(int type_condition) {
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+void insertSubTicket(int keyTicket, int subTicket) {
+    ArrayResize(order[orderIndex(keyTicket)].result_related_ticket, ArraySize(order[orderIndex(keyTicket)].result_related_ticket)+1);
+    order[orderIndex(keyTicket)].result_related_ticket[ArraySize(order[orderIndex(keyTicket)].result_related_ticket) - 1] = subTicket;
+}
+
 //+------------------------------------------------------------------+
 void c1lean_closed_orders(int ticket) {
     //for(int i = 0; i < ArraySize(order); i++) {
