@@ -87,6 +87,9 @@ class organization_orders {
         add_vol_mode_final = false;
         is_trail_in_this_candle = false;
         sl_Value = MathAbs(entry - sl[0]);
+        //printf("input Entry: " + DoubleToString(inputEntry));
+        //printf("SL[0]: " + DoubleToString(sl[0]));
+        //printf("SL Value: " + IntegerToString(ticket) + "         " + DoubleToString(sl_Value));
         volume = vol;
         volFactor = volume_factor;
         //orderModel = order_model;
@@ -98,6 +101,7 @@ class organization_orders {
     }
     void modifyTrailTrigger(double input_trail_trigger) {
         trail_trigger = input_trail_trigger;
+        printf("Ticket " + IntegerToString(ticket) + " : " + "new Trigger : " + DoubleToString(trail_trigger));
     }
     double getAddVolTriggerPrice() {
         return add_vol_trigger;
@@ -146,16 +150,16 @@ class organization_orders {
         add_vol_count += 1;
     }
     void sub_ticket_list(int input_key_ticket) {
-        for(int i = 0; i < ArraySize(order_status_list); i++) {
-            if(order_status_list[i].GetKeyTicket() == input_key_ticket && order_status_list[i].status) {
+        for(int i = 0; i < ArraySize(order); i++) {
+            if(order[i].GetKeyTicket() == input_key_ticket && order[i].status) {
                 ArrayResize(result_related_ticket, ArraySize(result_related_ticket) + 1, 0);
-                result_related_ticket[ArraySize(result_related_ticket) - 1] = order_status_list[i].GetTicketOrder();
+                result_related_ticket[ArraySize(result_related_ticket) - 1] = order[i].GetTicketOrder();
             }
         }
     }
     bool isKey(int input_ticket) {
-        for(int i = 0; i < ArraySize(order_status_list); i++) {
-            if(order_status_list[i].GetKeyTicket() == input_ticket && order_status_list[i].status) {
+        for(int i = 0; i < ArraySize(order); i++) {
+            if(order[i].GetKeyTicket() == input_ticket && order[i].status) {
                 return true;
             }
         }
@@ -229,14 +233,14 @@ class organization_orders {
         }
     }
 };
-organization_orders order_status_list[];
+organization_orders order[];
 
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-int check_order_status_list_index(int ticket) {
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(order_status_list[i].GetTicketOrder() == ticket) {
+int orderIndex(int ticket) {
+    for(int i = 0; i < ArraySize(order); i++) {
+        if(order[i].GetTicketOrder() == ticket) {
             return i;
         }
     }
@@ -246,8 +250,8 @@ int check_order_status_list_index(int ticket) {
 //|                                                                  |
 //+------------------------------------------------------------------+
 int findIndexFromLiveTicket(int ticket) {
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(order_status_list[i].liveTicket == ticket) {
+    for(int i = 0; i < ArraySize(order); i++) {
+        if(order[i].liveTicket == ticket) {
             return i;
         }
     }
@@ -258,15 +262,15 @@ int findIndexFromLiveTicket(int ticket) {
 //|                                                                  |
 //+------------------------------------------------------------------+
 void new_order_for_organization(int keyTicket, bool isReal, double vol, double volume_factor, int order_type, double inputEntry, double inputSL, double inputTP) {
-    ArrayResize(order_status_list, ArraySize(order_status_list) + 1, 0);
-    order_status_list[ArraySize(order_status_list) - 1].newOrder(keyTicket, isReal, vol, volume_factor, order_type, inputEntry, inputSL, inputTP);
+    ArrayResize(order, ArraySize(order) + 1, 0);
+    order[ArraySize(order) - 1].newOrder(keyTicket, isReal, vol, volume_factor, order_type, inputEntry, inputSL, inputTP);
 }
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 void off_all_trail() {
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        order_status_list[i].is_trail_in_this_candle = false;
+    for(int i = 0; i < ArraySize(order); i++) {
+        order[i].is_trail_in_this_candle = false;
     }
 }
 //+------------------------------------------------------------------+
@@ -274,9 +278,9 @@ void off_all_trail() {
 //+------------------------------------------------------------------+
 int count_keyTicket(int type_condition) {
     int counter = 0;
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(order_status_list[i].GetKeyTicket() == -1 && order_status_list[i].status) {
-            if((type_condition == 1 && order_status_list[i].type == OP_BUY) || (type_condition == -1 && order_status_list[i].type == OP_SELL)) {
+    for(int i = 0; i < ArraySize(order); i++) {
+        if(order[i].GetKeyTicket() == -1 && order[i].status) {
+            if((type_condition == 1 && order[i].type == OP_BUY) || (type_condition == -1 && order[i].type == OP_SELL)) {
                 counter += 1;
             }
         }
@@ -289,33 +293,33 @@ int count_keyTicket(int type_condition) {
 //+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
 void c1lean_closed_orders(int ticket) {
-    //for(int i = 0; i < ArraySize(order_status_list); i++) {
-    //if(order_status_list[i].status) {
-    //if(OrderSelect(order_status_list[i].GetTicketOrder(), SELECT_BY_TICKET, MODE_HISTORY)) {
+    //for(int i = 0; i < ArraySize(order); i++) {
+    //if(order[i].status) {
+    //if(OrderSelect(order[i].GetTicketOrder(), SELECT_BY_TICKET, MODE_HISTORY)) {
     printf("Clean Close Order " + IntegerToString(ticket) + "Successfully!");
-    order_status_list[check_order_status_list_index(ticket)].status = false;
+    order[orderIndex(ticket)].status = false;
 }
 //+------------------------------------------------------------------+
 void checkGhostOrders() {
     sumEquityOpenOrders = 0.0;
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(order_status_list[i].status) {
-            sumEquityOpenOrders += order_status_list[i].equityProfit();
+    for(int i = 0; i < ArraySize(order); i++) {
+        if(order[i].status) {
+            sumEquityOpenOrders += order[i].equityProfit();
         }
     }
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(order_status_list[i].status) {
-            order_status_list[i].checkExecuteOrder();
-            order_status_list[i].checkCloseGhostOrder();
+    for(int i = 0; i < ArraySize(order); i++) {
+        if(order[i].status) {
+            order[i].checkExecuteOrder();
+            order[i].checkCloseGhostOrder();
         }
     }
 }
 //+------------------------------------------------------------------+
 double calculateCommission() {
     double commission = 0.0;
-    for(int i = 0; i < ArraySize(order_status_list); i++) {
-        if(!order_status_list[i].ghostMode) {
-            commission += order_status_list[i].commission;
+    for(int i = 0; i < ArraySize(order); i++) {
+        if(!order[i].ghostMode) {
+            commission += order[i].commission;
         }
     }
     return commission;
