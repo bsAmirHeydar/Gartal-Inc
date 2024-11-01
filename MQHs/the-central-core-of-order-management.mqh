@@ -49,12 +49,12 @@ class organization_orders {
     bool is_trail_in_this_candle;
     int add_vol_count;
     int trail_count;
-    bool add_vol_mode_first;
+    bool AVfirst;
     bool add_vol_mode_final;
     double sl[];
     double tp[];
     double trail_trigger;
-    double add_vol_trigger;
+    double AV_trigger;
     double sl_Value;
     bool ghostMode;
     double commission;
@@ -81,12 +81,12 @@ class organization_orders {
         ArrayResize(tp, 1, 0);
         tp[0] = inputTP;
         trail_trigger = inputEntry;
-        add_vol_trigger = inputEntry;
+        AV_trigger = inputEntry;
         //printf(ticket + ":  " + trail_trigger);
         status = true;
         trail_count = 0;
         add_vol_count = 0;
-        add_vol_mode_first = false;
+        AVfirst = false;
         add_vol_mode_final = false;
         is_trail_in_this_candle = false;
         sl_Value = MathAbs(entry - sl[0]);
@@ -107,10 +107,10 @@ class organization_orders {
         //printf("Ticket " + IntegerToString(ticket) + " : " + "new Trigger : " + DoubleToString(trail_trigger));
     }
     double getAddVolTriggerPrice() {
-        return add_vol_trigger;
+        return AV_trigger;
     }
-    void modifyAddVolTrigger(double input_add_vol_trigger) {
-        add_vol_trigger = input_add_vol_trigger;
+    void modifyAddVolTrigger(double input_AV_trigger) {
+        AV_trigger = input_AV_trigger;
     }
     void newSL(double slNew) {
         if(OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES)) {
