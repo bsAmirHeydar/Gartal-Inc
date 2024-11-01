@@ -41,26 +41,31 @@ double calculateTP(int typeCondition, double slValue, double entry) {
     double value = 0.0;
     double spread = Ask - Bid;
     if(tp_calculate_with_spread) {
-        slValue += spread;
+        slValue += 1 * spread;
     }
     if(tp_mode == 0) {
         value = slValue * tp_factor;
-        if(typeCondition == -1) {
-            value -= spread;
-        }
+        //if(typeCondition == -1) {
+        //value -= spread;
+        //}
     }
     if(tp_calculate_with_spread)
-        slValue -= spread;
+        slValue -= 1 * spread;
     double commission = 0.0;
+    double tpDollar = risk * tp_factor;
     if(tp_calculate_with_commission) {
-        commission = volume(slValue + spread, typeCondition) * commissionPerLot;
-        printf("probebly +Commission: " + DoubleToString((commission / CalculatePointValue())) + "$" );
-        value += (commission / CalculatePointValue()) * Point;
+        double vol = volume(slValue + spread, typeCondition);
+        commission = vol * commissionPerLot;
+        printf("$" + CalculatePointValue());
+        double tpPoint = (tpDollar / (CalculatePointValue() * vol)) * Point;
+        double commissionPoint = (commission / (CalculatePointValue() * vol)) * Point;
+        //printf("probebly +Commission: " + DoubleToString((commission / CalculatePointValue())) + "$" );
+        value = tpPoint + commissionPoint;
     }
     if(typeCondition == 1) {
-        return entry + value;
+        return entry + spread + value;
     } else if(typeCondition == -1) {
-        return (entry - value) + spread;
+        return (entry - value);
     }
     return 0.0;
 }
