@@ -35,6 +35,7 @@ enum FVGpositionModeOption {
 input string fvgPositionName = "Direction --- ** FVG Position Average ** ---";
 input bool isFvgPositionAverage = false; // ?
 input FVGpositionModeOption FVGpositionMode = 1; //FVG Mode
+input int fvgCount = 30;
 class fvgPosition {
   public:
     double price;
@@ -69,7 +70,7 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
     if(!isFvgPositionAverage) {
         return true;
     }
-    int fvgCount = 30;
+    
     if(typeCondition == 0) {
         FVGbuySignal = false;
         FVGsellSignal = false;

@@ -56,7 +56,7 @@ double calculateTP(int typeCondition, double slValue, double entry) {
     if(tp_calculate_with_commission) {
         double vol = volume(slValue + spread, typeCondition);
         commission = vol * commissionPerLot;
-        printf("$" + CalculatePointValue());
+        //printf("$" + CalculatePointValue());
         double tpPoint = (tpDollar / (CalculatePointValue() * vol)) * Point;
         double commissionPoint = (commission / (CalculatePointValue() * vol)) * Point;
         //printf("probebly +Commission: " + DoubleToString((commission / CalculatePointValue())) + "$" );
