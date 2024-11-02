@@ -6,6 +6,7 @@
 #property copyright "Copyright 2024, MetaQuotes Ltd."
 #property link      "https://www.mql5.com"
 #property strict
+#include "public-tools.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -32,12 +33,17 @@ enum sl_mode_option {
     sl_mode_fix_point = 1, //Fix Point
     sl_mode_ATR = 2, //ATR
     sl_mode_roulette = 3, //roulette (Just for Roulette Strategy)
+    sl_mode_bands = 4, //Bands
 };
 input string sl_non0 = "-----SL Management-----";
 input sl_mode_option sl_mode = 0;
 input double sl_candle_factor = 1;
 input double slAtrFactor = 1.0;
-double calculateSL(int typeCondition, double slValue) {
+input bandsModeOption SLbandsMode = 0; //Bands Mode
+input int SLBandsPeriod = 20; //Bands Period
+input double SLBandsDeviation = 2.0; //Bands Deviation
+
+double calculateSL(int typeCondition, double slValue, double entry) {
     double value = 0.0;
     if(sl_mode == 0) {
         value = sl_candle_factor * slValue;
@@ -48,9 +54,9 @@ double calculateSL(int typeCondition, double slValue) {
         return rouletteSL;
     }
     if(typeCondition == 1) {
-        return Close[1] - value;
+        return entry - value;
     } else if(typeCondition == -1) {
-        return Close[1] + value;
+        return entry + value;
     } 
     return 0;
 }

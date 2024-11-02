@@ -89,7 +89,7 @@ class organization_orders {
         AVfirst = false;
         add_vol_mode_final = false;
         is_trail_in_this_candle = false;
-        sl_Value = MathAbs(entry - sl[0]);
+        sl_Value = MathAbs(entry - sl[0]) - (Ask - Bid);
         //printf("input Entry: " + DoubleToString(inputEntry));
         //printf("SL[0]: " + DoubleToString(sl[0]));
         //printf("SL Value: " + IntegerToString(ticket) + "         " + DoubleToString(sl_Value));
@@ -111,6 +111,7 @@ class organization_orders {
     }
     void modifyAddVolTrigger(double input_AV_trigger) {
         AV_trigger = input_AV_trigger;
+        dotDraw(AV_trigger, 0);
     }
     void newSL(double slNew) {
         if(OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES)) {
