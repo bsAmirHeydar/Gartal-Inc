@@ -7,6 +7,7 @@
 #property link      "https://www.mql5.com"
 #property strict
 #include "factor241016-martingle and anti.mqh"
+#include "../order-management.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |
 //+------------------------------------------------------------------+
@@ -28,10 +29,9 @@
 // #import
 //+------------------------------------------------------------------+
 double buy_volume_factor = 1, sell_volume_factor = 1;
-input double iniRisk = 100.0; //Risk per order
-input double newRiskPercentage = 0.01;
-double risk = iniRisk;
-input string factorNon0 = "$$$$$$$$$$$$$$$$$$$$$     VOLUME FACTOR MODELING     $$$$$$$$$$$$$$$$$$$$$"; //#########   Factor modeling (LEVEL 2)   #########
+input double newRiskPercentage = 0.01; //New Risk %
+double risk = iniRisk; 
+//input string factorNon0 = "$$$$$$$$$$$$$$$$$$$$$     VOLUME FACTOR MODELING     $$$$$$$$$$$$$$$$$$$$$"; //#########   Factor modeling (LEVEL 2)   #########
 void factorEngine(int typeCondition) {
     if(typeCondition == 1) {
         buy_volume_factor = GRun(typeCondition);

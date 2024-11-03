@@ -29,16 +29,16 @@
 //+------------------------------------------------------------------+
 double rouletteSL;
 enum sl_mode_option {
-    sl_mode_candle = 0, //Candle
+    sl_mode_candle = 0, //HiLo
     sl_mode_fix_point = 1, //Fix Point
     sl_mode_ATR = 2, //ATR
-    sl_mode_roulette = 3, //roulette (Just for Roulette Strategy)
+    sl_mode_roulette = 3, //Roulette Strategy
     sl_mode_bands = 4, //Bands
 };
-input string sl_non0 = "-----SL Management-----";
-input sl_mode_option sl_mode = 0;
-input double sl_candle_factor = 1;
-input double slAtrFactor = 1.0;
+input string sl_non0 = "**************************************** Stop Loss ****************************************"; //########## STOP LOSS ##########
+input sl_mode_option sl_mode = 0; //SL Mode
+input double sl_candle_factor = 1; //Candle Factor
+input double slAtrFactor = 1.0; //ATR Factor
 input bandsModeOption SLbandsMode = 0; //Bands Mode
 input int SLBandsPeriod = 20; //Bands Period
 input double SLBandsDeviation = 2.0; //Bands Deviation

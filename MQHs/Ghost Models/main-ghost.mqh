@@ -7,15 +7,14 @@
 #property link      "https://www.mql5.com"
 #property strict
 #include "../ghost-engine-management.mqh"
-#include "ghost241024-simple-profit.mqh"
 
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-input string ghostNon0 = "@@@@@@@@@@     GHOST MODELING     @@@@@@@@@@"; //#########   ghost modeling (LEVEL 2)   #########
-input bool livePermission = true; //Are all transactions real?
+input string ghostNon0 = "---------------------------------------------------------------------------------------------------- Ghost (Level-2) ----------------------------------------------------------------------------------------------------"; //#################### GHOST (LEVEL-2) ####################
+input bool livePermission = true; //All Real?
 
-
+#include "ghost241024-simple-profit.mqh"
 #include "ghost241016-simple-loss.mqh"
 //+------------------------------------------------------------------+
 //| defines                                                          |

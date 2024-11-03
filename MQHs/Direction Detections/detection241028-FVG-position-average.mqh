@@ -28,14 +28,14 @@
 // #import
 //+------------------------------------------------------------------+\
 enum FVGpositionModeOption {
-    normalWithoutRange__fvg = 0,
-    justRange__fvg = 1,
-    all__fvg = 2,
+    normalWithoutRange__fvg = 0, //Trend
+    justRange__fvg = 1, //Range
+    all__fvg = 2, //Mixed
 };
-input string fvgPositionName = "Direction --- ** FVG Position Average ** ---";
-input bool isFvgPositionAverage = false; // ?
+input string fvgPositionName =  "**************************************** Direction Detection: FVG Position Average ****************************************"; //########## FVG POSITION AVERAGE ##########
+input bool isFvgPositionAverage = false; //FVG Position Average?
 input FVGpositionModeOption FVGpositionMode = 1; //FVG Mode
-input int fvgCount = 30;
+input int fvgCount = 30; //FVG Counter
 class fvgPosition {
   public:
     double price;

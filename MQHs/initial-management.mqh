@@ -33,11 +33,11 @@ enum assetCalculate {
     assetByBalance = 1, //Balance
     assetOFF = 3, //OFF
 };
-input string iniNone = "----- INITIALIZE -----";
-input assetCalculate assetModeDayTP = 3;
-input float assetDayTP = 0.0; //Asset $ TP Day
-input assetCalculate assetModeDaySL = 3;
-input float assetDaySL = 0.0; //Asset $ SL Day
+input string iniNone = "---------------------------------------------------------------------------------------------------- Daily SL TP ----------------------------------------------------------------------------------------------------"; //#################### DAILY SL TP ####################
+input assetCalculate assetModeDayTP = 3; //TP Mode
+input float assetDayTP = 0.0; //TP $
+input assetCalculate assetModeDaySL = 3; //SL Mode
+input float assetDaySL = 0.0; //SL $
 
 //+------------------------------------------------------------------+
 //|                                                                  |

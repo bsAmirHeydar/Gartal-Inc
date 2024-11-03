@@ -34,13 +34,13 @@ enum rouletteModeOption {
     Trend = 0,
     Consolidation = 1,
 };
-input string detection241024Name = "--- Detection Roulette ---";
-input bool isDetectionRoulette = false;
+input string detection241024Name = "**************************************** Detection: Roulette ****************************************"; //########## ROULETTE ##########
+input bool isDetectionRoulette = false; //Roulette?
 input rouletteModeOption rouletteMode = 0; //Roulette Mode
 input bool isCloseBeforOpenRoulette = true; //Close Order before Open
-input int detection241024MAperiod = 50; //MA Period
 input bool isHMAforRoulette = true; //is HMA?
 input MA_mode_option detection241024MAmode = 0; //(if HMA is false) MA Mode
+input int detection241024MAperiod = 50; //MA Period
 input double detection241024SmallATRfactor = 3.0; //Small ATR Factor
 input double detection241024BigATRfactor = 5.0; //Big ATR Factor
 bool detection241024_roulette(int typeCondition) {

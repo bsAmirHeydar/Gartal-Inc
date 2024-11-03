@@ -28,9 +28,9 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-input string non2 = "--- Detection CM William Fix Vix-----";
-input bool is_alert3 = false; //Alert 3 SAFE
-input bool is_alert4 = false; //Alert 4 Aggressive
+input string non2 = "**************************************** Detection: CM William Fix Vix ****************************************"; //########## CM WILLIAM FIX VIX ##########
+input bool is_alert3 = false; //SAFE?
+input bool is_alert4 = false; //Aggressive?
 int str = 3; //Entry Price Action Strength--Close > X Bars Back
 int ltLB = 40; //Long-Term Look Back Current Bar Has To Close Below This Value OR Medium Term
 int mtLB = 14; //Medium-Term Look Back Current Bar Has To Close Below This Value OR Long Term
