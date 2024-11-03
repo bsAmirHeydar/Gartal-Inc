@@ -71,7 +71,6 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
     if(!isFvgPositionAverage) {
         return true;
     }
-    
     if(typeCondition == 0) {
         FVGbuySignal = false;
         FVGsellSignal = false;
@@ -96,20 +95,19 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
             }
             averageFvgDown = sumFVG / fvgCount;
         }
-        
         double hst = iHigh(Symbol(), fvgPositionTF, iHighest(Symbol(), fvgPositionTF, MODE_HIGH, 5, shift + 1));
         double lst = iLow(Symbol(), fvgPositionTF, iLowest(Symbol(), fvgPositionTF, MODE_LOW, 5, shift + 1));
         //Comment(ArraySize(fvgDownRecords)  + "\n" + averageFvgDown + "\n" + lst);
         //dotDraw(averageFvgUp, 1);
         FVGbuySignal = hst >= averageFvgUp && averageFvgUp != 0.0;
         if(FVGbuySignal) {
-            PlotIndividualLine(averageFvgUp, clrGreen, shift + 1);
-            FillArea(iLow(Symbol(), fvgPositionTF, shift + 1), averageFvgUp, C'21,174,185', shift + 1, "fvg Up");
+            PlotIndividualLine(averageFvgUp, clrGreen, shift + 1, fvgPositionTF);
+            FillArea(iLow(Symbol(), fvgPositionTF, shift + 1), averageFvgUp, C'21,174,185', shift + 1, "fvg Up", fvgPositionTF);
         }
         FVGsellSignal = lst <= averageFvgDown && averageFvgDown != 0.0;
         if(FVGsellSignal) {
-            PlotIndividualLine(averageFvgDown, clrRed, shift + 1);
-            FillArea(iHigh(Symbol(), fvgPositionTF, shift + 1), averageFvgDown, clrBrown, shift + 1, "fvg Down");
+            PlotIndividualLine(averageFvgDown, clrRed, shift + 1, fvgPositionTF);
+            FillArea(iHigh(Symbol(), fvgPositionTF, shift + 1), averageFvgDown, clrBrown, shift + 1, "fvg Down", fvgPositionTF);
         }
     } else {
         if(FVGpositionMode == 0) {
@@ -137,5 +135,15 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
         }
     }
     return false;
+}
+//+------------------------------------------------------------------+
+void forground_fvgPositionAverage() {
+    static datetime  lastTime = 0;
+    if(lastTime == iTime(Symbol(), fvgPositionTF, 0))
+        return;
+    lastTime = iTime(Symbol(), fvgPositionTF, 0);
+    if(isFvgPositionAverage) {
+        detection241028_FVG_position_average(0, 0);
+    }
 }
 //+------------------------------------------------------------------+
