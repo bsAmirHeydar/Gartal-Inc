@@ -34,6 +34,7 @@ input string check_candle_color_check_non = "***********************************
 
 input bool isLastCandle = true; //Last Candle Same Color?
 input bool isReverseCandle = false; //Exitstance of Reverse Candles?
+input bool isMirrorCandle = false; //Mirror?
 input candleReversModeOption candleReversMode = 0; //Reverse Candle Calculator Mode
 input int counterReverseCandle = 3; //Counter
 //bool check_last_candle_color_check_buy_signal, check_last_candle_color_check_sell_signal;
@@ -43,19 +44,17 @@ bool check_last_candle_color_check(int type_condition) {
     }
     bool buySignal = false;
     bool sellSignal = false;
+    if(isMirrorCandle)
+        type_condition *= -1;
     if(type_condition == 1) {
         if(Close[1] > Open[1]) {
             return true;
         }
-    } else if(type_condition) {
+    } else if(type_condition == -1) {
         if(Close[1] < Open[1]) {
             return true;
         }
     }
-    if(type_condition == 1)
-        return buySignal;
-    else if(type_condition == -1)
-        return sellSignal;
     return false;
 }
 //+------------------------------------------------------------------+
@@ -67,6 +66,8 @@ bool check_candle_color_check(int type_condition) {
     }
     bool buySignal = false;
     bool sellSignal = false;
+    if(isMirrorCandle)
+        type_condition *= -1;
     if(type_condition == 1) {
         for(int i = 2; i < counterReverseCandle + 2; i++) {
             if(Close[i] < Open[i]) {
@@ -90,14 +91,19 @@ bool detection241009detection_candle_vas(int typeCondition) {
         return true;
     }
     bool buySignal = true, sellSignal = true;
-    for(int i = 2; i <= counterReverseCandle + 1; i++) {
-        if(!(Close[i] < Open[i])) {
-            return false;
+    if(isMirrorCandle)
+        typeCondition *= -1;
+    if(typeCondition == 1) {
+        for(int i = 2; i <= counterReverseCandle + 1; i++) {
+            if(!(Close[i] < Open[i])) {
+                return false;
+            }
         }
-    }
-    for(int i = 2; i <= counterReverseCandle + 1; i++) {
-        if(!(Close[i] > Open[i])) {
-            return false;
+    } else if(typeCondition == -1) {
+        for(int i = 2; i <= counterReverseCandle + 1; i++) {
+            if(!(Close[i] > Open[i])) {
+                return false;
+            }
         }
     }
     if(typeCondition == 1) {
