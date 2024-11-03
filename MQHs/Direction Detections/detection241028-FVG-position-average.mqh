@@ -34,6 +34,7 @@ enum FVGpositionModeOption {
 };
 input string fvgPositionName =  "**************************************** Direction Detection: FVG Position Average ****************************************"; //########## FVG POSITION AVERAGE ##########
 input bool isFvgPositionAverage = false; //FVG Position Average?
+input ENUM_TIMEFRAMES fvgPositionTF = PERIOD_CURRENT; //FVG Time Frame
 input FVGpositionModeOption FVGpositionMode = 1; //FVG Mode
 input int fvgCount = 30; //FVG Counter
 class fvgPosition {
@@ -45,16 +46,16 @@ fvgPosition fvgUpRecords[];
 fvgPosition fvgDownRecords[];
 void checkNewFVG(int shift) {
     double multiple = 0.25;
-    double atr = iATR(Symbol(), PERIOD_CURRENT, 200, shift + 1) * multiple;
-    if(Low[shift + 1] > High[shift + 3] && Close[shift + 2] > High[shift + 3] && Low[shift + 1] - High[shift + 3] > atr) {
+    double atr = iATR(Symbol(), fvgPositionTF, 200, shift + 1) * multiple;
+    if(iLow(Symbol(), fvgPositionTF, shift + 1) > iHigh(Symbol(), fvgPositionTF, shift + 3) && iClose(Symbol(), fvgPositionTF, shift + 2) > iHigh(Symbol(), fvgPositionTF, shift + 3) && iLow(Symbol(), fvgPositionTF, shift + 1) - iHigh(Symbol(), fvgPositionTF, shift + 3) > atr) {
         int lastArrayUp = ArraySize(fvgUpRecords);
         ArrayResize(fvgUpRecords, lastArrayUp + 1);
-        fvgUpRecords[lastArrayUp].price = High[shift + 3];
+        fvgUpRecords[lastArrayUp].price = iHigh(Symbol(), fvgPositionTF, shift + 3);
     }
-    if(High[shift + 1] < Low[shift + 3] && Close[shift + 2] < Low[shift + 3] && Low[shift + 3] - High[shift + 1] > atr) {
+    if(iHigh(Symbol(), fvgPositionTF, shift + 1) < iLow(Symbol(), fvgPositionTF, shift + 3) && iClose(Symbol(), fvgPositionTF, shift + 2) < iLow(Symbol(), fvgPositionTF, shift + 3) && iLow(Symbol(), fvgPositionTF, shift + 3) - iHigh(Symbol(), fvgPositionTF, shift + 1) > atr) {
         int lastArrayDown = ArraySize(fvgDownRecords);
         ArrayResize(fvgDownRecords, lastArrayDown + 1);
-        fvgDownRecords[lastArrayDown].price = Low[shift + 3];
+        fvgDownRecords[lastArrayDown].price = iLow(Symbol(), fvgPositionTF, shift + 3);
     }
 }
 //+------------------------------------------------------------------+
@@ -95,19 +96,20 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
             }
             averageFvgDown = sumFVG / fvgCount;
         }
-        double hst = High[iHighest(Symbol(), PERIOD_CURRENT, MODE_HIGH, 5, shift + 1)];
-        double lst = Low[iLowest(Symbol(), PERIOD_CURRENT, MODE_LOW, 5, shift + 1)];
+        
+        double hst = iHigh(Symbol(), fvgPositionTF, iHighest(Symbol(), fvgPositionTF, MODE_HIGH, 5, shift + 1));
+        double lst = iLow(Symbol(), fvgPositionTF, iLowest(Symbol(), fvgPositionTF, MODE_LOW, 5, shift + 1));
         //Comment(ArraySize(fvgDownRecords)  + "\n" + averageFvgDown + "\n" + lst);
         //dotDraw(averageFvgUp, 1);
         FVGbuySignal = hst >= averageFvgUp && averageFvgUp != 0.0;
         if(FVGbuySignal) {
             PlotIndividualLine(averageFvgUp, clrGreen, shift + 1);
-            FillArea(Low[shift + 1], averageFvgUp, C'21,174,185', shift + 1, "fvg Up");
+            FillArea(iLow(Symbol(), fvgPositionTF, shift + 1), averageFvgUp, C'21,174,185', shift + 1, "fvg Up");
         }
         FVGsellSignal = lst <= averageFvgDown && averageFvgDown != 0.0;
         if(FVGsellSignal) {
             PlotIndividualLine(averageFvgDown, clrRed, shift + 1);
-            FillArea(High[shift + 1], averageFvgDown, clrBrown, shift + 1, "fvg Down");
+            FillArea(iHigh(Symbol(), fvgPositionTF, shift + 1), averageFvgDown, clrBrown, shift + 1, "fvg Down");
         }
     } else {
         if(FVGpositionMode == 0) {
