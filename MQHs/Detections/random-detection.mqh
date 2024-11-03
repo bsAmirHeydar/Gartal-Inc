@@ -26,7 +26,7 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-input bool isRandomDetection = false;
+bool isRandomDetection = false;
 int randomCounter;
 bool randDetection(int typeCondition) {
     if(!isRandomDetection) {
