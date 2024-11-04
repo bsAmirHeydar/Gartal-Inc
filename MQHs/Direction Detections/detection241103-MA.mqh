@@ -30,6 +30,7 @@
 //+------------------------------------------------------------------+
 input string maCrossName =  "**************************************** Direction Detection: Moving Average Cross ****************************************"; //########## MOVING AVERAGE CROSS ##########
 input bool isMaCross = false; //MA Cross?
+input bool showMaCross = false; //Show?
 input MA_mode_option maSmallMode = 2; //Fast MA mode
 input bool isHmaSmall = false; //Fast -> HMA?
 input ENUM_TIMEFRAMES maSmallTF = PERIOD_CURRENT; //Fast MA Time Frame
@@ -56,10 +57,10 @@ bool detection241103_MA(int tc, int shift) {
         maSmall = iMA(Symbol(), maSmallTF, maSmallPeriod, 0, ConvertToMAType(maSmallMode), ConvertSource(maSmallSource), shift + 1);
     bS = maSmall > maBig;
     sS = maSmall < maBig;
-    if(bS) {
+    if(showMaCross && bS) {
         PlotIndividualLine(maSmall, clrGreen, shift + 1, maSmallTF);
         PlotIndividualLine(maBig, clrGreen, shift + 1, maBigTF);
-    } else if(sS) {
+    } else if(showMaCross && sS) {
         PlotIndividualLine(maSmall, clrRed, shift + 1, maSmallTF);
         PlotIndividualLine(maBig, clrRed, shift + 1, maBigTF);
     }

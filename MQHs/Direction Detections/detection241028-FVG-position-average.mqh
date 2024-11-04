@@ -34,6 +34,7 @@ enum FVGpositionModeOption {
 };
 input string fvgPositionName =  "**************************************** Direction Detection: FVG Position Average ****************************************"; //########## FVG POSITION AVERAGE ##########
 input bool isFvgPositionAverage = false; //FVG Position Average?
+input bool showFvgPosition = false; //Show?
 input ENUM_TIMEFRAMES fvgPositionTF = PERIOD_CURRENT; //FVG Time Frame
 input FVGpositionModeOption FVGpositionMode = 1; //FVG Mode
 input int fvgCount = 30; //FVG Counter
@@ -100,12 +101,12 @@ bool detection241028_FVG_position_average(int typeCondition, int shift) {
         //Comment(ArraySize(fvgDownRecords)  + "\n" + averageFvgDown + "\n" + lst);
         //dotDraw(averageFvgUp, 1);
         FVGbuySignal = hst >= averageFvgUp && averageFvgUp != 0.0;
-        if(FVGbuySignal) {
+        if(showFvgPosition && FVGbuySignal) {
             PlotIndividualLine(averageFvgUp, clrGreen, shift + 1, fvgPositionTF);
             FillArea(iLow(Symbol(), fvgPositionTF, shift + 1), averageFvgUp, C'21,174,185', shift + 1, "fvg Up", fvgPositionTF);
         }
         FVGsellSignal = lst <= averageFvgDown && averageFvgDown != 0.0;
-        if(FVGsellSignal) {
+        if(showFvgPosition && FVGsellSignal) {
             PlotIndividualLine(averageFvgDown, clrRed, shift + 1, fvgPositionTF);
             FillArea(iHigh(Symbol(), fvgPositionTF, shift + 1), averageFvgDown, clrBrown, shift + 1, "fvg Down", fvgPositionTF);
         }

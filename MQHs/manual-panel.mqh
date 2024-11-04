@@ -95,7 +95,7 @@ bool manualRun(int tc) {
     }
     if(manualType == 0) {
         execute = true;
-    } else if(manualType == -1) {
+    } else if(manualType == -1 && !execute) {
         if(manualDirection == 1) {
             if(manualTrigger != 0.0) {
                 PlotIndividualLine(manualTrigger, manualTriggerColor, 0, 0);
@@ -111,7 +111,7 @@ bool manualRun(int tc) {
                 }
             }
         }
-    } else if(manualType == 1) {
+    } else if(manualType == 1 && !execute) {
         if(manualDirection == 1) {
             if(manualTrigger != 0.0) {
                 PlotIndividualLine(manualTrigger, manualTriggerColor, 0, 0);
