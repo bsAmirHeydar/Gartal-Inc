@@ -34,7 +34,7 @@ input string detection241109Name = "**************************************** Dir
 input bool isDonDir = false; //Dochain?
 input bool showDonDir = false; //Show?
 input bool DonDirIsRevese = false; //Reverse?
-input int DonDirPeriod = 20; //DonDirchain Period
+input int DonDirPeriod = 20; //Donchain Period
 int lastSideDonDirchain = 0;
 bool detection241104_DonDirchain(int tc) {
     if(!isDonDir) {
