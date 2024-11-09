@@ -33,7 +33,7 @@ enum direction {
     off = 10 //OFF
 };
 enum manualTypeOption {
-    market = 0, //Merket
+    market = 0, //Market
     limit = -1, //Limit
     stop = 1 //Stop
 };

@@ -61,6 +61,7 @@ class organization_orders {
     double profit;
     double volume;
     double volFactor;
+    datetime entryDate;
 
 
     organization_orders(void) {
@@ -97,6 +98,7 @@ class organization_orders {
         volFactor = volume_factor;
         //orderModel = order_model;
         commission = (volFactor * volume) * commissionPerLot;
+        entryDate = TimeCurrent();
     }
 
     double getTrailTriggerPrice() {
