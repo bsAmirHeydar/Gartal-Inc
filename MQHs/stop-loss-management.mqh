@@ -113,9 +113,9 @@ double calculateSL(int typeCondition, double slValue, double entry) {
             }
         }
         if(typeCondition == 1) {
-            return hst;
-        } else if(typeCondition == -1) {
             return lst;
+        } else if(typeCondition == -1) {
+            return hst;
         }
     }
     if(typeCondition == 1) {
