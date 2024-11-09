@@ -62,14 +62,16 @@ bool detection241104_DonDirchain(int tc) {
         PlotIndividualLine(lst, clrRed, 1);
         PlotIndividualLine(mdi, clrGold, 1);
     }
-    bS = High[1] > hst;// && lastSideDonDirchain == -1;
-    sS = Low[1] < lst;// && lastSideDonDirchain == 1;
+    //bS = High[1] > hst;// && lastSideDonDirchain == -1;
+   // sS = Low[1] < lst;// && lastSideDonDirchain == 1;
     if(High[1] > hst) {
         lastSideDonDirchain = 1;
     }
     if(Low[1] < lst) {
         lastSideDonDirchain = -1;
     }
+    bS = lastSideDonDirchain == 1;
+    sS = lastSideDonDirchain == -1;
     if(!DonDirIsRevese) {
         if(tc == 1) {
             return bS;
