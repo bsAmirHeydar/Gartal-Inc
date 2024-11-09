@@ -32,6 +32,7 @@
 input string detection241104Name = "**************************************** Detection: Donchain ****************************************"; //########## DONCHAIN ##########
 input bool isDon = false; //Donchain?
 input run_option donRunGround = 0; //Run Ground
+input bool donIsRevese = false; //Reverse?
 input int donPeriod = 55; //Donchain Period
 int lastSideDonchain = 0;
 bool detection241104_Donchain(int tc) {
@@ -100,10 +101,18 @@ bool detection241104_Donchain(int tc) {
         }
     }
     //Comment(lastSideDonchain);
-    if(tc == 1) {
-        return bS;
-    } else if(tc == -1) {
-        return sS;
+    if(!donIsRevese) {
+        if(tc == 1) {
+            return bS;
+        } else if(tc == -1) {
+            return sS;
+        }
+    } else if(donIsRevese) {
+        if(tc == 1) {
+            return sS;
+        } else if(tc == -1) {
+            return bS;
+        }
     }
     return false;
 }
