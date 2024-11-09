@@ -34,7 +34,8 @@ enum sl_mode_option {
     sl_mode_ATR = 2, //ATR
     sl_mode_roulette = 3, //Roulette Strategy
     sl_mode_bands = 4, //Bands
-    sl_mode_donchain = 5, //Median Donchain
+    sl_mode_donchain_median = 5, //Median Donchain
+    sl_mode_donchain = 6, //Donchain
 };
 input string sl_non0 = "**************************************** Stop Loss ****************************************"; //########## STOP LOSS ##########
 input sl_mode_option sl_mode = 0; //SL Mode
@@ -95,6 +96,27 @@ double calculateSL(int typeCondition, double slValue, double entry) {
             }
         }
         return lst + (hst - lst) / 2;
+    } else if(sl_mode == 6) {
+        double hst = 0.0, lst = 0.0;
+        for(int i = 1; i <= SLDonchainPeriod; i++) {
+            if(hst == 0) {
+                hst = High[i];
+            }
+            if(lst == 0) {
+                lst = Low[i];
+            }
+            if(High[i] > hst) {
+                hst = High[i];
+            }
+            if(Low[i] < lst) {
+                lst = Low[i];
+            }
+        }
+        if(typeCondition == 1) {
+            return hst;
+        } else if(typeCondition == -1) {
+            return lst;
+        }
     }
     if(typeCondition == 1) {
         return entry - value;
