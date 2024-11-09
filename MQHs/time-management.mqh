@@ -42,13 +42,35 @@ input dayOfWeek Day2 = 2;
 input dayOfWeek Day3 = 3;
 input dayOfWeek Day4 = 4;
 input dayOfWeek Day5 = 5;
-input string non1_time0 = "**************************************** Section 0 ****************************************"; //########## SECTION 0 ##########
+input string non1_time0 = "**************************************** Main Section ****************************************"; //########## SECTION 0 ##########
 input int start_hour = 1; //Start Hour 0
 input int start_minute = 30; //Start Hinute 0
 input int end_hour = 23; //End Hour 0
 input int end_minute = 55; //End Minute 0
 input int close_hour = 23; //close hour 0
 input int close_minute = 55; // close minute 0
+input string non1_news0 = "<><><><><><><><><><><><><><><> News Section <><><><><><><><><><><><><><><>"; //########## SECTION NEWS ##########
+input int newsMinuteClose = 5; //Close Minute before
+input int newsMinuteBefore = 15; //Minute before News
+input int newsMinuteAfter = 10; //Minute after News
+input bool isNews1 = false; //News 1?
+input int newsHour1 = 0;  //News Hour 1
+input int newsMinute1 = 0; //News Minute 1
+input bool isNews2 = false; //News 2?
+input int newsHour2 = 0;  //News Hour 2
+input int newsMinute2 = 0; //News Minute 2
+input bool isNews3 = false; //News 3?
+input int newsHour3 = 0;  //News Hour 3
+input int newsMinute3 = 0; //News Minute 3
+input bool isNews4 = false; //News 4?
+input int newsHour4 = 0;  //News Hour 4
+input int newsMinute4 = 0; //News Minute 4
+input bool isNews5 = false; //News 5?
+input int newsHour5 = 0;  //News Hour 5
+input int newsMinute5 = 0; //News Minute 5
+input bool isNews6 = false; //News 6?
+input int newsHour6 = 0;  //News Hour 6
+input int newsMinute6 = 0; //News Minute 6
 input string non1_time1 = "**************************************** Section 1 ****************************************"; //########## SECTION 1 ##########
 input bool isSection1 = false;
 input int start_hour1 = 1; //Start Hour 1
@@ -116,6 +138,43 @@ input int close_minute8 = 55; // close minute 8
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+int calNews(int nHour, int nMinute, int result) {
+    int closeMin = nMinute - newsMinuteClose;
+    int startMin = nMinute - newsMinuteBefore;
+    int endMin = nMinute + newsMinuteAfter;
+    int closeHour = nHour;
+    int startHour = nHour;
+    int endHour = nHour;
+    while(closeMin < 0) {
+        closeHour -= 1;
+        closeMin = 60 - closeMin;
+    }
+    while(startMin < 0) {
+        startHour -= 1;
+        startMin = 60 - startMin;
+    }
+    while(endMin > 59) {
+        endHour += 1;
+        endMin = endMin - 60;
+    }
+    if(result == -10) {
+        return closeHour;
+    } else if(result == -11) {
+        return closeMin;
+    } else  if(result == 0) {
+        return startHour;
+    } else if(result == 1) {
+        return startMin;
+    } else if(result == 10) {
+        return endHour;
+    } else if(result == 11) {
+        return endMin;
+    }
+    return -1;
+}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool inTime() {
     datetime serverTime = TimeCurrent();
     int currentHour = TimeHour(serverTime);
@@ -130,6 +189,42 @@ bool inTime() {
         currentDayOfWeek != Day5
     ) {
         return false;
+    }
+    if(isNews1) {
+        if((currentHour > calNews(newsHour1, newsMinute1, 0) || (currentHour == calNews(newsHour1, newsMinute1, 0) && currentMinute > calNews(newsHour1, newsMinute1, 1))) &&
+                (currentHour < calNews(newsHour1, newsMinute1, 10) || (currentHour == calNews(newsHour1, newsMinute1, 10) && currentMinute < calNews(newsHour1, newsMinute1, 11))) ) {
+            return false;
+        }
+    }
+    if(isNews2) {
+        if((currentHour > calNews(newsHour2, newsMinute2, 0) || (currentHour == calNews(newsHour2, newsMinute2, 0) && currentMinute > calNews(newsHour2, newsMinute2, 1))) &&
+                (currentHour < calNews(newsHour2, newsMinute2, 10) || (currentHour == calNews(newsHour2, newsMinute2, 10) && currentMinute < calNews(newsHour2, newsMinute2, 11))) ) {
+            return false;
+        }
+    }
+    if(isNews3) {
+        if((currentHour > calNews(newsHour3, newsMinute3, 0) || (currentHour == calNews(newsHour3, newsMinute3, 0) && currentMinute > calNews(newsHour3, newsMinute3, 1))) &&
+                (currentHour < calNews(newsHour3, newsMinute3, 10) || (currentHour == calNews(newsHour3, newsMinute3, 10) && currentMinute < calNews(newsHour3, newsMinute3, 11))) ) {
+            return false;
+        }
+    }
+    if(isNews4) {
+        if((currentHour > calNews(newsHour4, newsMinute4, 0) || (currentHour == calNews(newsHour4, newsMinute4, 0) && currentMinute > calNews(newsHour4, newsMinute4, 1))) &&
+                (currentHour < calNews(newsHour4, newsMinute4, 10) || (currentHour == calNews(newsHour4, newsMinute4, 10) && currentMinute < calNews(newsHour4, newsMinute4, 11))) ) {
+            return false;
+        }
+    }
+    if(isNews5) {
+        if((currentHour > calNews(newsHour5, newsMinute5, 0) || (currentHour == calNews(newsHour5, newsMinute5, 0) && currentMinute > calNews(newsHour5, newsMinute5, 1))) &&
+                (currentHour < calNews(newsHour5, newsMinute5, 10) || (currentHour == calNews(newsHour5, newsMinute5, 10) && currentMinute < calNews(newsHour5, newsMinute5, 11))) ) {
+            return false;
+        }
+    }
+    if(isNews6) {
+        if((currentHour > calNews(newsHour6, newsMinute6, 0) || (currentHour == calNews(newsHour6, newsMinute6, 0) && currentMinute > calNews(newsHour6, newsMinute6, 1))) &&
+                (currentHour < calNews(newsHour6, newsMinute6, 10) || (currentHour == calNews(newsHour6, newsMinute6, 10) && currentMinute < calNews(newsHour6, newsMinute6, 11))) ) {
+            return false;
+        }
     }
     if((currentHour > start_hour || (currentHour == start_hour && currentMinute > start_minute)) &&
             (currentHour < end_hour || (currentHour == end_hour && currentMinute < end_minute)) ) {
@@ -193,6 +288,36 @@ bool closeTime() {
     int currentHour = TimeHour(serverTime);
     int currentMinute = TimeMinute(serverTime);
     int currentDay = TimeDay(serverTime);
+    if(isNews1) {
+        if(currentHour == calNews(newsHour1, newsMinute1, -10) && currentMinute == calNews(newsHour1, newsMinute1, -11)) {
+            return true;
+        }
+    }
+    if(isNews2) {
+        if(currentHour == calNews(newsHour2, newsMinute2, -10) && currentMinute == calNews(newsHour2, newsMinute2, -11)) {
+            return true;
+        }
+    }
+    if(isNews3) {
+        if(currentHour == calNews(newsHour3, newsMinute3, -10) && currentMinute == calNews(newsHour3, newsMinute3, -11)) {
+            return true;
+        }
+    }
+    if(isNews4) {
+        if(currentHour == calNews(newsHour4, newsMinute4, -10) && currentMinute == calNews(newsHour4, newsMinute4, -11)) {
+            return true;
+        }
+    }
+    if(isNews5) {
+        if(currentHour == calNews(newsHour5, newsMinute5, -10) && currentMinute == calNews(newsHour5, newsMinute5, -11)) {
+            return true;
+        }
+    }
+    if(isNews6) {
+        if(currentHour == calNews(newsHour6, newsMinute6, -10) && currentMinute == calNews(newsHour6, newsMinute6, -11)) {
+            return true;
+        }
+    }
     if(currentHour == close_hour && currentMinute == close_minute) {
         return true;
     }

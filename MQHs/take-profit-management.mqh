@@ -37,6 +37,7 @@ enum tp_mode_option {
 //+------------------------------------------------------------------+
 input string tpName0 = "**************************************** Take Profit ****************************************"; //########## TAKE PROFIT ##########
 input tp_mode_option tp_mode = 0; //TP Mode
+input double tp_factor = 10.0; //TP factor
 input bool tp_calculate_with_spread = true; //With Spread?
 input bool tp_calculate_with_commission = true; //With Commission?
 input bool isMinTP = false; //Min TP?
