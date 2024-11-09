@@ -32,6 +32,7 @@
 input string detection241104Name = "**************************************** Detection: Donchain ****************************************"; //########## DONCHAIN ##########
 input bool isDon = false; //Donchain?
 input run_option donRunGround = 0; //Run Ground
+input bool showDon = false; //Show?
 input bool donIsRevese = false; //Reverse?
 input int donPeriod = 55; //Donchain Period
 int lastSideDonchain = 0;
@@ -59,9 +60,11 @@ bool detection241104_Donchain(int tc) {
         mdi = lst + (hst - lst) / 2;
         static datetime  lastTime = 0;
         if(lastTime != Time[0]) {
-            PlotIndividualLine(hst, clrBlue, 1);
-            PlotIndividualLine(lst, clrRed, 1);
-            PlotIndividualLine(mdi, clrGold, 1);
+            if(showDon) {
+                PlotIndividualLine(hst, clrBlue, 1);
+                PlotIndividualLine(lst, clrRed, 1);
+                PlotIndividualLine(mdi, clrGold, 1);
+            }
             lastTime = Time[0];
         }
         bS = Bid > hst;// && lastSideDonchain == -1;
@@ -88,15 +91,17 @@ bool detection241104_Donchain(int tc) {
             }
         }
         mdi = lst + (hst - lst) / 2;
-        PlotIndividualLine(hst, clrBlue, 1);
-        PlotIndividualLine(lst, clrRed, 1);
-        PlotIndividualLine(mdi, clrGold, 1);
-        bS = Close[1] > hst;// && lastSideDonchain == -1;
-        sS = Close[1] < lst;// && lastSideDonchain == 1;
-        if(Close[1] > hst) {
+        if(showDon) {
+            PlotIndividualLine(hst, clrBlue, 1);
+            PlotIndividualLine(lst, clrRed, 1);
+            PlotIndividualLine(mdi, clrGold, 1);
+        }
+        bS = High[1] > hst;// && lastSideDonchain == -1;
+        sS = Low[1] < lst;// && lastSideDonchain == 1;
+        if(High[1] > hst) {
             lastSideDonchain = 1;
         }
-        if(Close[1] < lst) {
+        if(Low[1] < lst) {
             lastSideDonchain = -1;
         }
     }
