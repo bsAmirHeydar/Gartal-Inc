@@ -26,7 +26,7 @@
 //   string ErrorDescription(int error_code);
 // #import
 //+------------------------------------------------------------------+
-input string detection241109Name = "**************************************** Detection: Bands ****************************************"; //########## BANDS ##########
+input string detection241109NameBand = "**************************************** Detection: Bands ****************************************"; //########## BANDS ##########
 input bool isBands = false; //Bands?
 input int DBandsPeriod = 20; //Bands Period
 input double DBandsDev = 2.0; //Bands Dev

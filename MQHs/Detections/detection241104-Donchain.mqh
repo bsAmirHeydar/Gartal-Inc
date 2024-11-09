@@ -34,7 +34,7 @@ input bool isDon = false; //Donchain?
 input run_option donRunGround = 0; //Run Ground
 input bool showDon = false; //Show?
 input bool donIsRevese = false; //Reverse?
-input int donPeriod = 55; //Donchain Period
+input int donPeriod = 20; //Donchain Period
 int lastSideDonchain = 0;
 bool detection241104_Donchain(int tc) {
     if(!isDon) {
